@@ -5,6 +5,8 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
 import com.facebook.react.bridge.Promise
 
+import com.posthog.PostHog
+
 class PosthogReactNativeSessionReplayModule(reactContext: ReactApplicationContext) :
   ReactContextBaseJavaModule(reactContext) {
 
@@ -17,6 +19,11 @@ class PosthogReactNativeSessionReplayModule(reactContext: ReactApplicationContex
   @ReactMethod
   fun multiply(a: Double, b: Double, promise: Promise) {
     promise.resolve(a * b)
+  }
+
+  @ReactMethod
+  fun isEnabled(promise: Promise) {
+    promise.resolve(PostHog.isSessionReplayActive())
   }
 
   companion object {
