@@ -7,6 +7,7 @@ import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReadableMap;
 
 import com.posthog.PostHog
+import com.posthog.PostHogConfig
 import com.posthog.android.PostHogAndroid
 import com.posthog.android.PostHogAndroidConfig
 import com.posthog.internal.PostHogSessionManager
@@ -31,18 +32,27 @@ class PosthogReactNativeSessionReplayModule(reactContext: ReactApplicationContex
     val uuid = UUID.fromString(sessionId)
     PostHogSessionManager.setSessionId(uuid)
 
-    val context = this.getReactApplicationContext()
+    val context = this.reactApplicationContext
     val apiKey = sdkOptions.getString("apiKey") ?: ""
-    val host = sdkOptions.getString("host") ?: ""
+    val host = sdkOptions.getString("host") ?: PostHogConfig.DEFAULT_HOST
+    val debugValue = sdkOptions.getBoolean("debug")
+
+    val maskAllTextInputs = sdkReplayConfig.getBoolean("maskAllTextInputs")
+    val maskAllImages = sdkReplayConfig.getBoolean("maskAllImages")
+    val captureLog = sdkReplayConfig.getBoolean("captureLog")
+    val debouncerDelayMs = sdkReplayConfig.getInt("androidDebouncerDelayMs")
 
     val config = PostHogAndroidConfig(apiKey, host).apply {
-      flushAt = 1
-      debug = true
+      debug = debugValue
       captureDeepLinks = false
       captureApplicationLifecycleEvents = false
       captureScreenViews = false
       sessionReplay = true
       sessionReplayConfig.screenshot = true
+      sessionReplayConfig.captureLogcat = captureLog
+      sessionReplayConfig.debouncerDelayMs = debouncerDelayMs.toLong()
+      sessionReplayConfig.maskAllImages = maskAllImages
+      sessionReplayConfig.maskAllTextInputs = maskAllTextInputs
     }
     PostHogAndroid.setup(context, config)
 
@@ -64,6 +74,7 @@ class PosthogReactNativeSessionReplayModule(reactContext: ReactApplicationContex
 
   @ReactMethod
   fun endSession(promise: Promise) {
+    PostHog.endSession()
     promise.resolve(null)
   }
 
