@@ -35,7 +35,15 @@ class PosthogReactNativeSessionReplayModule(reactContext: ReactApplicationContex
     val apiKey = sdkOptions.getString("apiKey") ?: ""
     val host = sdkOptions.getString("host") ?: ""
 
-    val config = PostHogAndroidConfig(apiKey, host)
+    val config = PostHogAndroidConfig(apiKey, host).apply {
+      flushAt = 1
+      debug = true
+      captureDeepLinks = false
+      captureApplicationLifecycleEvents = false
+      captureScreenViews = false
+      sessionReplay = true
+      sessionReplayConfig.screenshot = true
+    }
     PostHogAndroid.setup(context, config)
 
     promise.resolve(null)
