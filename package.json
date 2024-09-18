@@ -51,14 +51,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/marandaneto/posthog-react-native-session-replay.git"
+    "url": "git+https://github.com/PostHog/posthog-react-native-session-replay.git"
   },
-  "author": "Manoel Aranda Neto <marandaneto@gmail.com> (https://github.com/marandaneto)",
+  "author": "PostHog <engineering@posthog.com> (https://github.com/PostHog)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/marandaneto/posthog-react-native-session-replay/issues"
+    "url": "https://github.com/PostHog/posthog-react-native-session-replay/issues"
   },
-  "homepage": "https://github.com/marandaneto/posthog-react-native-session-replay#readme",
+  "homepage": "https://github.com/PostHog/posthog-react-native-session-replay#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
