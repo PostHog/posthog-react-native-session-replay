@@ -14,7 +14,7 @@ class PosthogReactNativeSessionReplay: NSObject {
     let host = sdkOptions["host"] as? String ?? PostHogConfig.defaultHost
     let debug = sdkOptions["debug"] as? Bool ?? false
 
-    PostHogSessionManager.shared.startSession(sessionId)
+    PostHogSessionManager.shared.setSessionId(sessionId)
 
     let config = PostHogConfig(apiKey: apiKey, host: host)
     config.sessionReplay = true
@@ -30,7 +30,7 @@ class PosthogReactNativeSessionReplay: NSObject {
   
   @objc(startSession:withResolver:withRejecter:)
   func startSession(sessionId: String, resolve:RCTPromiseResolveBlock,reject:RCTPromiseRejectBlock) -> Void {
-    PostHogSessionManager.shared.startSession(sessionId)
+    PostHogSessionManager.shared.setSessionId(sessionId)
     PostHogSDK.shared.startSession()
     resolve(nil)
   }
