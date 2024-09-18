@@ -22,7 +22,25 @@ class PosthogReactNativeSessionReplay: NSObject {
     config.captureScreenViews = false
     config.debug = debug
     config.sessionReplayConfig.screenshotMode = true
-    // TODO: all missing config from sdkReplayConfig and decideReplayConfig
+
+    let maskAllTextInputs = sdkReplayConfig["maskAllTextInputs"] as? Bool ?? false
+    config.sessionReplayConfig.maskAllTextInputs = maskAllTextInputs
+
+    let maskAllImages = sdkReplayConfig["maskAllImages"] as? Bool ?? false
+    config.sessionReplayConfig.maskAllImages = maskAllImages
+
+    let iOSdebouncerDelayMs = sdkReplayConfig["iOSdebouncerDelayMs"] as? Int ?? 1000
+    let timeInterval: TimeInterval = Double(iOSdebouncerDelayMs) / 1000.0
+    config.sessionReplayConfig.debouncerDelay = timeInterval
+
+    let captureNetworkTelemetry = sdkReplayConfig["captureNetworkTelemetry"] as? Bool ?? false
+    config.sessionReplayConfig.captureNetworkTelemetry = captureNetworkTelemetry
+
+//    let endpoint = decideReplayConfig["endpoint"] as? String?
+//    if let endpoint = endpoint {
+//      config.sessionReplayConfig.snapshotEndpoint = endpoint
+//    }
+
     PostHogSDK.shared.setup(config)
 
     resolve(nil)
