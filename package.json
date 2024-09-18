@@ -1,6 +1,6 @@
 {
   "name": "posthog-react-native-session-replay",
-  "version": "0.0.4",
+  "version": "0.0.11",
   "description": "Session Replay",
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.js",
@@ -51,25 +51,23 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/marandaneto/posthog-react-native-session-replay.git"
+    "url": "git+https://github.com/PostHog/posthog-react-native-session-replay.git"
   },
-  "author": "Manoel Aranda Neto <marandaneto@gmail.com> (https://github.com/marandaneto)",
+  "author": "PostHog <engineering@posthog.com> (https://github.com/PostHog)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/marandaneto/posthog-react-native-session-replay/issues"
+    "url": "https://github.com/PostHog/posthog-react-native-session-replay/issues"
   },
-  "homepage": "https://github.com/marandaneto/posthog-react-native-session-replay#readme",
+  "homepage": "https://github.com/PostHog/posthog-react-native-session-replay#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
   "devDependencies": {
-    "@commitlint/config-conventional": "^17.0.2",
     "@evilmartians/lefthook": "^1.5.0",
     "@react-native/eslint-config": "^0.73.1",
     "@release-it/conventional-changelog": "^5.0.0",
     "@types/jest": "^29.5.5",
     "@types/react": "^18.2.44",
-    "commitlint": "^17.0.2",
     "del-cli": "^5.1.0",
     "eslint": "^8.51.0",
     "eslint-config-prettier": "^9.0.0",
@@ -99,11 +97,6 @@
     "modulePathIgnorePatterns": [
       "<rootDir>/example/node_modules",
       "<rootDir>/lib/"
-    ]
-  },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
     ]
   },
   "release-it": {

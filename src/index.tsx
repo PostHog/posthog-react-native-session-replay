@@ -24,10 +24,16 @@ export function multiply(a: number, b: number): Promise<number> {
 
 export function start(
   sessionId: string,
-  options: { [key: string]: any },
-  sdkOptions: { [key: string]: any }
+  sdkOptions: { [key: string]: any },
+  sdkReplayConfig: { [key: string]: any },
+  decideReplayConfig: { [key: string]: any }
 ): Promise<void> {
-  return PosthogReactNativeSessionReplay.start(sessionId, options, sdkOptions);
+  return PosthogReactNativeSessionReplay.start(
+    sessionId,
+    sdkOptions,
+    sdkReplayConfig,
+    decideReplayConfig
+  );
 }
 
 export function startSession(sessionId: string): Promise<void> {
@@ -45,8 +51,9 @@ export function isEnabled(): Promise<boolean> {
 export interface PostHogReactNativeSessionReplayModule {
   start: (
     sessionId: string,
-    options: { [key: string]: any },
-    sdkOptions: { [key: string]: any }
+    sdkOptions: { [key: string]: any }, // options from SDK such as apiKey
+    sdkReplayConfig: { [key: string]: any }, // config from SDK
+    decideReplayConfig: { [key: string]: any } // config from Decide API
   ) => Promise<void>;
 
   startSession: (sessionId: string) => Promise<void>;
