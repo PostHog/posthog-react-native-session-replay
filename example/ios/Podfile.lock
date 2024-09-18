@@ -7,7 +7,7 @@ PODS:
   - hermes-engine (0.75.3):
     - hermes-engine/Pre-built (= 0.75.3)
   - hermes-engine/Pre-built (0.75.3)
-  - PostHog (3.7.2)
+  - PostHog (3.12.2)
   - posthog-react-native-session-replay (0.0.11):
     - DoubleConversion
     - glog
@@ -1731,7 +1731,7 @@ SPEC CHECKSUMS:
   fmt: 4c2741a687cc09f0634a2e2c72a838b99f1ff120
   glog: 69ef571f3de08433d766d614c73a9838a06bf7eb
   hermes-engine: 8d2103d6c0176779aea4e25df6bb1410f9946680
-  PostHog: 885003686e614f8327b7d5cd655f44916f287440
+  PostHog: 23e3a550658e33a299d1667658cfc83cdfe79450
   posthog-react-native-session-replay: b8b05e281657a84e1b7f0eb091f9abe005f02c2b
   RCT-Folly: 4464f4d875961fce86008d45f4ecf6cef6de0740
   RCTDeprecation: 4191f6e64b72d9743f6fe1a8a16e89e868f5e9e7
