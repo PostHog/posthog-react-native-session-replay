@@ -42,6 +42,8 @@ class PosthogReactNativeSessionReplayModule(reactContext: ReactApplicationContex
     val captureLog = sdkReplayConfig.getBoolean("captureLog")
     val debouncerDelayMs = sdkReplayConfig.getInt("androidDebouncerDelayMs")
 
+    val endpoint = decideReplayConfig.getString("endpoint")
+
     val config = PostHogAndroidConfig(apiKey, host).apply {
       debug = debugValue
       captureDeepLinks = false
@@ -53,6 +55,10 @@ class PosthogReactNativeSessionReplayModule(reactContext: ReactApplicationContex
       sessionReplayConfig.debouncerDelayMs = debouncerDelayMs.toLong()
       sessionReplayConfig.maskAllImages = maskAllImages
       sessionReplayConfig.maskAllTextInputs = maskAllTextInputs
+
+      if (!endpoint.isNullOrEmpty()) {
+        snapshotEndpoint = endpoint
+      }
     }
     PostHogAndroid.setup(context, config)
 
