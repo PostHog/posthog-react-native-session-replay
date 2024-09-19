@@ -2,4 +2,4 @@
 
 ## 0.1.0 - 2024-09-19
 
-- no user facing changes
+- first minor release for React Native Session Replay
