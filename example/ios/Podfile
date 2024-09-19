@@ -38,6 +38,5 @@ target 'PosthogReactNativeSessionReplayExample' do
       :mac_catalyst_enabled => false,
       # :ccache_enabled => true
     )
-    __apply_Xcode_12_5_M1_post_install_workaround(installer) # For M1 Macs if needed
   end
 end
