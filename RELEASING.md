@@ -10,7 +10,7 @@ Releasing
     ./scripts/prepare-release.sh 3.0.0
     ```
 
- 3. Go to [GH Releases](https://github.com/PostHog/posthog-android/releases)
+ 3. Go to [GH Releases](https://github.com/PostHog/posthog-react-native-session-replay/releases)
  4. Choose a release name (e.g. `3.0.0`), and the tag you just created, ideally the same.
  5. Write a description of the release.
  6. Publish the release.
