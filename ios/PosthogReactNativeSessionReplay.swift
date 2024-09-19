@@ -36,10 +36,10 @@ class PosthogReactNativeSessionReplay: NSObject {
     let captureNetworkTelemetry = sdkReplayConfig["captureNetworkTelemetry"] as? Bool ?? false
     config.sessionReplayConfig.captureNetworkTelemetry = captureNetworkTelemetry
 
-//    let endpoint = decideReplayConfig["endpoint"] as? String?
-//    if let endpoint = endpoint {
-//      config.sessionReplayConfig.snapshotEndpoint = endpoint
-//    }
+    let endpoint = decideReplayConfig["endpoint"] as? String ?? ""
+    if !endpoint.isEmpty {
+      config.snapshotEndpoint = endpoint
+    }
 
     PostHogSDK.shared.setup(config)
 
