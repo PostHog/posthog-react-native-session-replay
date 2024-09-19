@@ -20,7 +20,9 @@ target 'PosthogReactNativeSessionReplayExample' do
   use_react_native!(
     :path => config[:reactNativePath],
     # An absolute path to your application root.
-    :app_path => "#{Pod::Config.instance.installation_root}/.."
+    :app_path => "#{Pod::Config.instance.installation_root}/..",
+    :hermes_enabled => false,
+    :fabric_enabled => true # If using Fabric architecture
   )
 
   target 'PosthogReactNativeSessionReplayExampleTests' do
@@ -36,5 +38,6 @@ target 'PosthogReactNativeSessionReplayExample' do
       :mac_catalyst_enabled => false,
       # :ccache_enabled => true
     )
+    __apply_Xcode_12_5_M1_post_install_workaround(installer) # For M1 Macs if needed
   end
 end
