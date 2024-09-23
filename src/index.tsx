@@ -48,6 +48,13 @@ export function isEnabled(): Promise<boolean> {
   return PosthogReactNativeSessionReplay.isEnabled();
 }
 
+export function identify(
+  distinctId: string,
+  anonymousId: string
+): Promise<void> {
+  return PosthogReactNativeSessionReplay.identify(distinctId, anonymousId);
+}
+
 export interface PostHogReactNativeSessionReplayModule {
   start: (
     sessionId: string,
@@ -61,6 +68,8 @@ export interface PostHogReactNativeSessionReplayModule {
   endSession: () => Promise<void>;
 
   isEnabled: () => Promise<boolean>;
+
+  identify: (distinctId: string, anonymousId: string) => Promise<void>;
 }
 
 const PostHogReactNativeSessionReplay: PostHogReactNativeSessionReplayModule = {
@@ -68,6 +77,7 @@ const PostHogReactNativeSessionReplay: PostHogReactNativeSessionReplayModule = {
   startSession,
   endSession,
   isEnabled,
+  identify,
 };
 
 export default PostHogReactNativeSessionReplay;
