@@ -2,10 +2,6 @@
 
 @interface RCT_EXTERN_MODULE(PosthogReactNativeSessionReplay, NSObject)
 
-RCT_EXTERN_METHOD(multiply:(float)a withB:(float)b
-                 withResolver:(RCTPromiseResolveBlock)resolve
-                 withRejecter:(RCTPromiseRejectBlock)reject)
-
 RCT_EXTERN_METHOD(start:(NSString)sessionId
                  withSdkOptions:(NSDictionary)sdkOptions
                  withSdkReplayConfig:(NSDictionary)sdkReplayConfig
@@ -22,6 +18,11 @@ RCT_EXTERN_METHOD(isEnabled:(RCTPromiseResolveBlock)resolve
 
 RCT_EXTERN_METHOD(endSession:(RCTPromiseResolveBlock)resolve
                  withRejecter:(RCTPromiseRejectBlock)reject)
+
+RCT_EXTERN_METHOD(identify:(NSString)distinctId
+                  withAnonymousId:(NSString)anonymousId
+                  withResolver:(RCTPromiseResolveBlock)resolve
+                  withRejecter:(RCTPromiseRejectBlock)reject)
 
 + (BOOL)requiresMainQueueSetup
 {

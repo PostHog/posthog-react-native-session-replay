@@ -10,6 +10,9 @@ import com.posthog.PostHog
 import com.posthog.PostHogConfig
 import com.posthog.android.PostHogAndroid
 import com.posthog.android.PostHogAndroidConfig
+import com.posthog.internal.PostHogPreferences
+import com.posthog.internal.PostHogPreferences.Companion.ANONYMOUS_ID
+import com.posthog.internal.PostHogPreferences.Companion.DISTINCT_ID
 import com.posthog.internal.PostHogSessionManager
 import java.util.UUID
 
@@ -18,13 +21,6 @@ class PosthogReactNativeSessionReplayModule(reactContext: ReactApplicationContex
 
   override fun getName(): String {
     return NAME
-  }
-
-  // Example method
-  // See https://reactnative.dev/docs/native-modules-android
-  @ReactMethod
-  fun multiply(a: Double, b: Double, promise: Promise) {
-    promise.resolve(a * b)
   }
 
   @ReactMethod
@@ -44,6 +40,9 @@ class PosthogReactNativeSessionReplayModule(reactContext: ReactApplicationContex
 
     val endpoint = decideReplayConfig.getString("endpoint")
 
+    val distinctId = sdkOptions.getString("distinctId") ?: ""
+    val anonymousId = sdkOptions.getString("anonymousId") ?: ""
+
     val config = PostHogAndroidConfig(apiKey, host).apply {
       debug = debugValue
       captureDeepLinks = false
@@ -61,6 +60,8 @@ class PosthogReactNativeSessionReplayModule(reactContext: ReactApplicationContex
       }
     }
     PostHogAndroid.setup(context, config)
+
+    setIdentify(config.cachePreferences, distinctId, anonymousId)
 
     promise.resolve(null)
   }
@@ -82,6 +83,24 @@ class PosthogReactNativeSessionReplayModule(reactContext: ReactApplicationContex
   fun endSession(promise: Promise) {
     PostHog.endSession()
     promise.resolve(null)
+  }
+
+  @ReactMethod
+  fun identify(distinctId: String, anonymousId: String, promise: Promise) {
+    setIdentify(PostHog.getConfig<PostHogConfig>()?.cachePreferences, distinctId, anonymousId)
+
+    promise.resolve(null)
+  }
+
+  private fun setIdentify(cachePreferences: PostHogPreferences?, distinctId: String, anonymousId: String) {
+    cachePreferences?.let { preferences ->
+      if (anonymousId.isNotEmpty()) {
+        preferences.setValue(ANONYMOUS_ID, anonymousId)
+      }
+      if (distinctId.isNotEmpty()) {
+        preferences.setValue(DISTINCT_ID, distinctId)
+      }
+    }
   }
 
   companion object {
