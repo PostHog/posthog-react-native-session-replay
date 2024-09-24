@@ -3,6 +3,8 @@ import PostHog
 @objc(PosthogReactNativeSessionReplay)
 class PosthogReactNativeSessionReplay: NSObject {
 
+  private var config: PostHogConfig?
+
   @objc(multiply:withB:withResolver:withRejecter:)
   func multiply(a: Float, b: Float, resolve:RCTPromiseResolveBlock,reject:RCTPromiseRejectBlock) -> Void {
     resolve(a*b)
@@ -41,7 +43,12 @@ class PosthogReactNativeSessionReplay: NSObject {
       config.snapshotEndpoint = endpoint
     }
 
+    let distinctId = sdkOptions["distinctId"] as? String ?? ""
+    let anonymousId = sdkOptions["anonymousId"] as? String ?? ""
+
     PostHogSDK.shared.setup(config)
+
+    setIdentify(self.config?.storageManager, distinctId: distinctId, anonymousId: anonymousId)
 
     resolve(nil)
   }
@@ -63,5 +70,24 @@ class PosthogReactNativeSessionReplay: NSObject {
   func endSession(resolve:RCTPromiseResolveBlock,reject:RCTPromiseRejectBlock) -> Void {
     PostHogSDK.shared.endSession()
     resolve(nil)
+  }
+
+  @objc(identify:withAnonymousId:withResolver:withRejecter:)
+  func identify(distinctId: String, anonymousId: String, resolve:RCTPromiseResolveBlock,reject:RCTPromiseRejectBlock) -> Void {
+    setIdentify(self.config?.storageManager, distinctId: distinctId, anonymousId: anonymousId)
+
+    resolve(nil)
+  }
+
+  private func setIdentify(_ storageManager: PostHogStorageManager?, distinctId: String, anonymousId: String) {
+    guard let storageManager = storageManager else {
+      return
+    }
+    if !anonymousId.isEmpty {
+      storageManager.setAnonymousId(anonymousId)
+    }
+    if !distinctId.isEmpty {
+      storageManager.setDistinctId(distinctId)
+    }
   }
 }

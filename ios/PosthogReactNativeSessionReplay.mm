@@ -23,6 +23,11 @@ RCT_EXTERN_METHOD(isEnabled:(RCTPromiseResolveBlock)resolve
 RCT_EXTERN_METHOD(endSession:(RCTPromiseResolveBlock)resolve
                  withRejecter:(RCTPromiseRejectBlock)reject)
 
+RCT_EXTERN_METHOD(identify:(NSString)distinctId
+                  withAnonymousId:(NSString)anonymousId
+                  withResolver:(RCTPromiseResolveBlock)resolve
+                  withRejecter:(RCTPromiseRejectBlock)reject)
+
 + (BOOL)requiresMainQueueSetup
 {
   return NO;
