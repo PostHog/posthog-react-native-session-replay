@@ -21,13 +21,6 @@ class PosthogReactNativeSessionReplayModule(reactContext: ReactApplicationContex
     return NAME
   }
 
-  // Example method
-  // See https://reactnative.dev/docs/native-modules-android
-  @ReactMethod
-  fun multiply(a: Double, b: Double, promise: Promise) {
-    promise.resolve(a * b)
-  }
-
   @ReactMethod
   fun start(sessionId: String, sdkOptions: ReadableMap, sdkReplayConfig: ReadableMap, decideReplayConfig: ReadableMap, promise: Promise) {
     val uuid = UUID.fromString(sessionId)

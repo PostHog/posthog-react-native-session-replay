@@ -18,10 +18,6 @@ const PosthogReactNativeSessionReplay =
         }
       );
 
-export function multiply(a: number, b: number): Promise<number> {
-  return PosthogReactNativeSessionReplay.multiply(a, b);
-}
-
 export function start(
   sessionId: string,
   sdkOptions: { [key: string]: any },
