@@ -43,6 +43,8 @@ class PosthogReactNativeSessionReplay: NSObject {
 
     PostHogSDK.shared.setup(config)
 
+    self.config = config
+
     setIdentify(self.config?.storageManager, distinctId: distinctId, anonymousId: anonymousId)
 
     resolve(nil)
