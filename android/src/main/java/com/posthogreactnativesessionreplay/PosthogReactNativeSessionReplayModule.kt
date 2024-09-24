@@ -11,6 +11,8 @@ import com.posthog.PostHogConfig
 import com.posthog.android.PostHogAndroid
 import com.posthog.android.PostHogAndroidConfig
 import com.posthog.internal.PostHogPreferences
+import com.posthog.internal.PostHogPreferences.Companion.ANONYMOUS_ID
+import com.posthog.internal.PostHogPreferences.Companion.DISTINCT_ID
 import com.posthog.internal.PostHogSessionManager
 import java.util.UUID
 
@@ -38,8 +40,8 @@ class PosthogReactNativeSessionReplayModule(reactContext: ReactApplicationContex
 
     val endpoint = decideReplayConfig.getString("endpoint")
 
-    val distinctId = sdkOptions.getString("distinctId")
-    val anonymousId = sdkOptions.getString("anonymousId")
+    val distinctId = sdkOptions.getString("distinctId") ?: ""
+    val anonymousId = sdkOptions.getString("anonymousId") ?: ""
 
     val config = PostHogAndroidConfig(apiKey, host).apply {
       debug = debugValue
@@ -59,14 +61,7 @@ class PosthogReactNativeSessionReplayModule(reactContext: ReactApplicationContex
     }
     PostHogAndroid.setup(context, config)
 
-    config.cachePreferences?.let { cachePreferences ->
-      if (!anonymousId.isNullOrEmpty()) {
-        cachePreferences.setValue(PostHogPreferences.ANONYMOUS_ID, anonymousId)
-      }
-      if (!distinctId.isNullOrEmpty()) {
-        cachePreferences.setValue(PostHogPreferences.DISTINCT_ID, distinctId)
-      }
-    }
+    setIdentify(config.cachePreferences, distinctId, anonymousId)
 
     promise.resolve(null)
   }
@@ -92,15 +87,20 @@ class PosthogReactNativeSessionReplayModule(reactContext: ReactApplicationContex
 
   @ReactMethod
   fun identify(distinctId: String, anonymousId: String, promise: Promise) {
-    PostHog.getConfig<PostHogConfig>()?.cachePreferences?.let { cachePreferences ->
+    setIdentify(PostHog.getConfig<PostHogConfig>()?.cachePreferences, distinctId, anonymousId)
+
+    promise.resolve(null)
+  }
+
+  private fun setIdentify(cachePreferences: PostHogPreferences?, distinctId: String, anonymousId: String) {
+    cachePreferences?.let { preferences ->
       if (anonymousId.isNotEmpty()) {
-        cachePreferences.setValue(PostHogPreferences.ANONYMOUS_ID, anonymousId)
+        preferences.setValue(ANONYMOUS_ID, anonymousId)
       }
       if (distinctId.isNotEmpty()) {
-        cachePreferences.setValue(PostHogPreferences.DISTINCT_ID, distinctId)
+        preferences.setValue(DISTINCT_ID, distinctId)
       }
     }
-    promise.resolve(null)
   }
 
   companion object {
