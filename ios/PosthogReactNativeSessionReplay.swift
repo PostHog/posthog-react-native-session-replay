@@ -41,6 +41,13 @@ class PosthogReactNativeSessionReplay: NSObject {
     let distinctId = sdkOptions["distinctId"] as? String ?? ""
     let anonymousId = sdkOptions["anonymousId"] as? String ?? ""
 
+    let sdkVersion = sdkOptions["sdkVersion"] as? String ?? ""
+
+    if !sdkVersion.isEmpty {
+        postHogSdkName = "posthog-react-native"
+        postHogVersion = sdkVersion
+    }
+
     PostHogSDK.shared.setup(config)
 
     self.config = config

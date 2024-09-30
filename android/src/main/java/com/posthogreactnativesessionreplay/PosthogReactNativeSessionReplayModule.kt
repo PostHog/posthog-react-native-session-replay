@@ -42,6 +42,7 @@ class PosthogReactNativeSessionReplayModule(reactContext: ReactApplicationContex
 
     val distinctId = sdkOptions.getString("distinctId") ?: ""
     val anonymousId = sdkOptions.getString("anonymousId") ?: ""
+    val theSdkVersion = sdkOptions.getString("sdkVersion")
 
     val config = PostHogAndroidConfig(apiKey, host).apply {
       debug = debugValue
@@ -57,6 +58,11 @@ class PosthogReactNativeSessionReplayModule(reactContext: ReactApplicationContex
 
       if (!endpoint.isNullOrEmpty()) {
         snapshotEndpoint = endpoint
+      }
+
+      if (!theSdkVersion.isNullOrEmpty()) {
+        sdkName = "posthog-react-native"
+        sdkVersion = theSdkVersion
       }
     }
     PostHogAndroid.setup(context, config)
