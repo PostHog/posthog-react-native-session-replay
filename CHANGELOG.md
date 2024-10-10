@@ -1,5 +1,9 @@
 ## Next
 
+## 0.1.3 - 2024-10-10
+
+- chore: upgrade Android SDK to 3.8.1
+
 ## 0.1.2 - 2024-09-24
 
 - chore: set the right sdk name and version
