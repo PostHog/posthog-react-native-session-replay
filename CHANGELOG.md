@@ -1,6 +1,6 @@
 ## Next
 
-## 0.1.3 - 2024-10-10
+## 0.1.3 - 2024-10-11
 
 - chore: upgrade Android SDK to 3.8.1
 
