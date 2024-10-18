@@ -1,5 +1,7 @@
 ## Next
 
+- chore: target min iOS 13 in podspec
+
 ## 0.1.4 - 2024-10-14
 
 - chore: upgrade Android SDK to 3.8.2
