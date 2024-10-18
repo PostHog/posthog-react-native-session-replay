@@ -1,5 +1,7 @@
 ## Next
 
+## 0.1.5 - 2024-10-18
+
 - chore: target min iOS 13 in podspec
 
 ## 0.1.4 - 2024-10-14
