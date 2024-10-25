@@ -1,5 +1,9 @@
 ## Next
 
+## 0.1.6 - 2024-10-25
+
+- chore: forces the SDK to be initialized on the main thread
+
 ## 0.1.5 - 2024-10-18
 
 - chore: target min iOS 13 in podspec
