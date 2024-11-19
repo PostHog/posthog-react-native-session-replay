@@ -46,7 +46,10 @@ class PosthogReactNativeSessionReplayModule(reactContext: ReactApplicationContex
       val anonymousId = sdkOptions.getString("anonymousId") ?: ""
       val theSdkVersion = sdkOptions.getString("sdkVersion")
 
-      val theFlushAt = sdkOptions.getInt("flushAt") ?: 20
+      var theFlushAt = 20
+      if (sdkOptions.hasKey("flushAt")) {
+        theFlushAt = sdkOptions.getInt("flushAt")
+      }
 
       val config = PostHogAndroidConfig(apiKey, host).apply {
         debug = debugValue
