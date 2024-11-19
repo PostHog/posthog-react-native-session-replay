@@ -115,26 +115,26 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup
 
-      - name: Cache cocoapods
-        id: cocoapods-cache
-        uses: actions/cache@v4
-        with:
-          path: |
-            **/ios/Pods
-          key: ${{ runner.os }}-cocoapods-${{ hashFiles('example/ios/Podfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cocoapods-
+      # do not cache cocoapods for now since we always depend on the latest version of the PostHog pod  
+      # - name: Cache cocoapods
+      #   id: cocoapods-cache
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: |
+      #       **/ios/Pods
+      #     key: ${{ runner.os }}-cocoapods-${{ hashFiles('example/ios/Podfile.lock') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-cocoapods-
 
+      # if: steps.cocoapods-cache.outputs.cache-hit != 'true'
       - name: Install cocoapods
-        if: steps.cocoapods-cache.outputs.cache-hit != 'true'
         run: |
           cd example/ios
           pod install
         env:
           NO_FLIPPER: 1
 
-      # - name: Build example for iOS
-      #   run: |
-      #     cd example/ios
-      #     gem install xcpretty
-      #     set -o pipefail && xcrun xcodebuild -workspace PosthogReactNativeSessionReplayExample.xcworkspace -configuration Debug -scheme posthog-react-native-session-replay -destination generic/platform=ios | xcpretty
+      - name: Build example for iOS
+        run: |
+          cd example/ios
+          xcrun xcodebuild -workspace PosthogReactNativeSessionReplayExample.xcworkspace -configuration Debug -scheme posthog-react-native-session-replay -destination generic/platform=ios
