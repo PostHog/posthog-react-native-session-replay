@@ -1,5 +1,9 @@
 ## Next
 
+## 0.1.7 - 2024-11-19
+
+- fix: respects the flushAt flag
+
 ## 0.1.6 - 2024-10-25
 
 - chore: forces the SDK to be initialized on the main thread
