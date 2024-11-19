@@ -43,6 +43,9 @@ class PosthogReactNativeSessionReplay: NSObject {
 
     let sdkVersion = sdkOptions["sdkVersion"] as? String ?? ""
 
+    let flushAt = sdkOptions["flushAt"] as? Int ?? 20
+    config.flushAt = flushAt
+
     if !sdkVersion.isEmpty {
         postHogSdkName = "posthog-react-native"
         postHogVersion = sdkVersion
