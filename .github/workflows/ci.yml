@@ -133,8 +133,7 @@ jobs:
         env:
           NO_FLIPPER: 1
 
-      # - name: Build example for iOS
-      #   run: |
-      #     cd example/ios
-      #     gem install xcpretty
-      #     set -o pipefail && xcrun xcodebuild -workspace PosthogReactNativeSessionReplayExample.xcworkspace -configuration Debug -scheme posthog-react-native-session-replay -destination generic/platform=ios | xcpretty
+      - name: Build example for iOS
+        run: |
+          cd example/ios
+          xcrun xcodebuild -workspace PosthogReactNativeSessionReplayExample.xcworkspace -configuration Debug -scheme posthog-react-native-session-replay -destination generic/platform=ios
