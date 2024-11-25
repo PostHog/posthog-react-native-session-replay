@@ -26,6 +26,12 @@ class PosthogReactNativeSessionReplay: NSObject {
     let maskAllImages = sdkReplayConfig["maskAllImages"] as? Bool ?? false
     config.sessionReplayConfig.maskAllImages = maskAllImages
 
+    let maskAllSandboxedViews = sdkReplayConfig["maskAllSandboxedViews"] as? Bool ?? false
+    config.sessionReplayConfig.maskAllSandboxedViews = maskAllSandboxedViews
+
+    let maskPhotoLibraryImages = sdkReplayConfig["maskPhotoLibraryImages"] as? Bool ?? false
+    config.sessionReplayConfig.maskPhotoLibraryImages = maskPhotoLibraryImages
+
     let iOSdebouncerDelayMs = sdkReplayConfig["iOSdebouncerDelayMs"] as? Int ?? 1000
     let timeInterval: TimeInterval = Double(iOSdebouncerDelayMs) / 1000.0
     config.sessionReplayConfig.debouncerDelay = timeInterval
