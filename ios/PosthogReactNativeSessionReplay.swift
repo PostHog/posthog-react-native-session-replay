@@ -20,23 +20,23 @@ class PosthogReactNativeSessionReplay: NSObject {
     config.debug = debug
     config.sessionReplayConfig.screenshotMode = true
 
-    let maskAllTextInputs = sdkReplayConfig["maskAllTextInputs"] as? Bool ?? false
+    let maskAllTextInputs = sdkReplayConfig["maskAllTextInputs"] as? Bool ?? true
     config.sessionReplayConfig.maskAllTextInputs = maskAllTextInputs
 
-    let maskAllImages = sdkReplayConfig["maskAllImages"] as? Bool ?? false
+    let maskAllImages = sdkReplayConfig["maskAllImages"] as? Bool ?? true
     config.sessionReplayConfig.maskAllImages = maskAllImages
 
-    let maskAllSandboxedViews = sdkReplayConfig["maskAllSandboxedViews"] as? Bool ?? false
+    let maskAllSandboxedViews = sdkReplayConfig["maskAllSandboxedViews"] as? Bool ?? true
     config.sessionReplayConfig.maskAllSandboxedViews = maskAllSandboxedViews
 
-    let maskPhotoLibraryImages = sdkReplayConfig["maskPhotoLibraryImages"] as? Bool ?? false
+    let maskPhotoLibraryImages = sdkReplayConfig["maskPhotoLibraryImages"] as? Bool ?? true
     config.sessionReplayConfig.maskPhotoLibraryImages = maskPhotoLibraryImages
 
     let iOSdebouncerDelayMs = sdkReplayConfig["iOSdebouncerDelayMs"] as? Int ?? 1000
     let timeInterval: TimeInterval = Double(iOSdebouncerDelayMs) / 1000.0
     config.sessionReplayConfig.debouncerDelay = timeInterval
 
-    let captureNetworkTelemetry = sdkReplayConfig["captureNetworkTelemetry"] as? Bool ?? false
+    let captureNetworkTelemetry = sdkReplayConfig["captureNetworkTelemetry"] as? Bool ?? true
     config.sessionReplayConfig.captureNetworkTelemetry = captureNetworkTelemetry
 
     let endpoint = decideReplayConfig["endpoint"] as? String ?? ""
