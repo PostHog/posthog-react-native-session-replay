@@ -1,5 +1,7 @@
 ## Next
 
+- fix: mask sandboxed system views like photo picker and user library photos
+
 ## 0.1.7 - 2024-11-19
 
 - fix: respects the flushAt flag
