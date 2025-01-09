@@ -17,7 +17,8 @@ Pod::Spec.new do |s|
   s.source_files = "ios/**/*.{swift,h,hpp,m,mm,c,cpp}"
 
   # ~> Version 3.0 and the versions up to 4.0, not including 4.0 and higher
-  s.dependency 'PostHog', '~> 3.0'
+  # Pinned to 3.18.0 until https://posthog.com/questions/pods-suddenly-not-able-to-be-installed is resolved
+  s.dependency 'PostHog', '3.18.0'
   s.ios.deployment_target = '13.0'
   s.swift_versions = "5.3"
 

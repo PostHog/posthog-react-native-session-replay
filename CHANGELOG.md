@@ -1,5 +1,9 @@
 ## Next
 
+## 0.1.9 - 2025-01-09
+
+- chore: pin the iOS SDK to 3.18.0
+
 ## 0.1.8 - 2024-11-26
 
 - fix: mask sandboxed system views like photo picker and user library photos
