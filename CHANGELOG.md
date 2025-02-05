@@ -1,5 +1,9 @@
 ## Next
 
+## 0.1.10 - 2025-02-05
+
+- chore: pin the iOS SDK to 3.19.x
+
 ## 0.1.9 - 2025-01-09
 
 - chore: pin the iOS SDK to 3.18.0
