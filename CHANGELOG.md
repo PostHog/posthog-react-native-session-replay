@@ -2,7 +2,7 @@
 
 ## 1.0.1 - 2025-02-21
 
-- chore: pin the iOS SDK to 3.19.x
+- chore: pin the iOS SDK to 3.x.x
 
 ## 1.0.0 - 2025-02-07
 
