@@ -1,5 +1,7 @@
 ## Next
 
+- chore: pin the iOS SDK to 3.19.x
+
 ## 1.0.0 - 2025-02-07
 
 - chore: Session Replay - GA
