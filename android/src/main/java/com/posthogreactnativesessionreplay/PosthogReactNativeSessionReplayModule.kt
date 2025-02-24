@@ -26,7 +26,13 @@ class PosthogReactNativeSessionReplayModule(reactContext: ReactApplicationContex
   }
 
   @ReactMethod
-  fun start(sessionId: String, sdkOptions: ReadableMap, sdkReplayConfig: ReadableMap, decideReplayConfig: ReadableMap, promise: Promise) {
+  fun start(
+    sessionId: String,
+    sdkOptions: ReadableMap,
+    sdkReplayConfig: ReadableMap,
+    decideReplayConfig: ReadableMap,
+    promise: Promise
+  ) {
     val initRunnable = Runnable {
       try {
         val uuid = UUID.fromString(sessionId)
@@ -148,7 +154,11 @@ class PosthogReactNativeSessionReplayModule(reactContext: ReactApplicationContex
     }
   }
 
-  private fun setIdentify(cachePreferences: PostHogPreferences?, distinctId: String, anonymousId: String) {
+  private fun setIdentify(
+    cachePreferences: PostHogPreferences?,
+    distinctId: String,
+    anonymousId: String
+  ) {
     cachePreferences?.let { preferences ->
       if (anonymousId.isNotEmpty()) {
         preferences.setValue(ANONYMOUS_ID, anonymousId)
