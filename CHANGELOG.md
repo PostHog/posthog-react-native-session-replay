@@ -1,5 +1,9 @@
 ## Next
 
+## 1.0.2 - 2025-02-24
+
+- fix: distinctId and anonymousId should degrade gracefully if they are strings that can't be parsed
+
 ## 1.0.1 - 2025-02-21
 
 - chore: pin the iOS SDK to 3.x.x
