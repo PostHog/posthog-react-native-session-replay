@@ -1,6 +1,6 @@
 ## Next
 
-## 1.0.2 - 2025-02-24
+## 1.0.2 - 2025-02-25
 
 - fix: distinctId and anonymousId should degrade gracefully if they are strings that can't be parsed
 
