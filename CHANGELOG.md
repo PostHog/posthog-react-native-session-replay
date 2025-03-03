@@ -1,5 +1,9 @@
 ## Next
 
+## 1.0.4 - 2025-03-03
+
+- chore: pin the iOS SDK to 3.18.x until we fix [this issue](https://github.com/PostHog/posthog-ios/issues/292)
+
 ## 1.0.3 - 2025-02-26
 
 - chore: bump Android SDK to 3.11.3
