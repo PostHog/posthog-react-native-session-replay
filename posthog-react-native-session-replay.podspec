@@ -16,9 +16,8 @@ Pod::Spec.new do |s|
 
   s.source_files = "ios/**/*.{swift,h,hpp,m,mm,c,cpp}"
 
-  # ~> Version 3.18.0 up to, but not including, 3.19
-  # fix after https://github.com/PostHog/posthog-ios/issues/292
-  s.dependency 'PostHog', '~> 3.18'
+  # ~> Version 3.20.0 up to, but not including, 4.0.0
+  s.dependency 'PostHog', '~> 3.20'
   s.ios.deployment_target = '13.0'
   s.swift_versions = "5.3"
 
