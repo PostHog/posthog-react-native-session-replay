@@ -1,5 +1,9 @@
 ## Next
 
+## 1.0.5 - 2025-03-04
+
+- chore: pin the iOS SDK to 3.20.x
+
 ## 1.0.4 - 2025-03-03
 
 - chore: pin the iOS SDK to 3.18.x until we fix [this issue](https://github.com/PostHog/posthog-ios/issues/292)
