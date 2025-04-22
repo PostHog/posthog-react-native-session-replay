@@ -1,10 +1,11 @@
 {
   "name": "posthog-react-native-session-replay",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Session Replay",
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/module/index.js",
+  "types": "./lib/typescript/module/src/index.d.ts",
   "exports": {
     ".": {
       "import": {
