@@ -1,5 +1,9 @@
 ## Next
 
+## 1.1.0 - 2025-06-06
+
+- chore: remove maskPhotoLibraryImages from the SDK config
+
 ## 1.0.6 - 2025-04-22
 
 - fix: add types key to package.json
