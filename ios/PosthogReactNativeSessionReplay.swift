@@ -120,7 +120,9 @@ class PosthogReactNativeSessionReplay: NSObject {
         guard let distinctIdStr = distinctId as? String,
               let anonymousIdStr = anonymousId as? String
         else {
-            hedgeLog("Invalid distinctId: \(distinctId) or anonymousId: \(anonymousId) provided. Expected strings.")
+            hedgeLog(
+                "Invalid distinctId: \(distinctId) or anonymousId: \(anonymousId) provided. Expected strings."
+            )
             resolve(nil)
             return
         }
