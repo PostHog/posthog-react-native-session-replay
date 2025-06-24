@@ -1,5 +1,10 @@
 ## Next
 
+## 1.1.1 - 2025-06-24
+
+- fix: check if distinctId and anonId are a string before using it
+- chore: pin the iOS SDK to 3.21.x
+
 ## 1.1.0 - 2025-06-06
 
 - chore: remove maskPhotoLibraryImages from the SDK config
