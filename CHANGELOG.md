@@ -4,6 +4,7 @@
 
 - fix: check if distinctId and anonId are a string before using it
 - chore: pin the iOS SDK to 3.21.x
+- chore: pin the Android SDK to 3.19.1
 
 ## 1.1.0 - 2025-06-06
 
