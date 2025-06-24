@@ -1,7 +1,7 @@
 import PostHog
 
 // Meant for internally logging PostHog related things
-func hedgeLog(_ message: String) {
+private func hedgeLog(_ message: String) {
     print("[PostHog] \(message)")
 }
 
@@ -17,7 +17,7 @@ class PosthogReactNativeSessionReplay: NSObject {
     ) {
         // we've seen cases where distinctId and anonymousId are not strings, so we need to check and convert them
         guard let sessionIdStr = sessionId as? String else {
-            hedgeLog("Invalid sessionId provided. Expected a string.")
+            hedgeLog("Invalid sessionId provided: \(sessionId). Expected a string.")
             resolve(nil)
             return
         }
@@ -90,7 +90,7 @@ class PosthogReactNativeSessionReplay: NSObject {
     ) {
         // we've seen cases where distinctId and anonymousId are not strings, so we need to check and convert them
         guard let sessionIdStr = sessionId as? String else {
-            hedgeLog("Invalid sessionId provided. Expected a string.")
+            hedgeLog("Invalid sessionId provided: \(sessionId). Expected a string.")
             resolve(nil)
             return
         }
@@ -120,7 +120,7 @@ class PosthogReactNativeSessionReplay: NSObject {
         guard let distinctIdStr = distinctId as? String,
               let anonymousIdStr = anonymousId as? String
         else {
-            hedgeLog("Invalid distinctId or anonymousId provided. Expected strings.")
+            hedgeLog("Invalid distinctId: \(distinctId) or anonymousId: \(anonymousId) provided. Expected strings.")
             resolve(nil)
             return
         }
