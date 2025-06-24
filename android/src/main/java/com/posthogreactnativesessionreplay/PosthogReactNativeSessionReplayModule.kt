@@ -79,7 +79,7 @@ class PosthogReactNativeSessionReplayModule(
               sessionReplay = true
               sessionReplayConfig.screenshot = true
               sessionReplayConfig.captureLogcat = captureLog
-              sessionReplayConfig.debouncerDelayMs = debouncerDelayMs.toLong()
+              sessionReplayConfig.throttleDelayMs = debouncerDelayMs.toLong()
               sessionReplayConfig.maskAllImages = maskAllImages
               sessionReplayConfig.maskAllTextInputs = maskAllTextInputs
 
