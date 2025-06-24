@@ -1,5 +1,10 @@
 import PostHog
 
+// Meant for internally logging PostHog related things
+func hedgeLog(_ message: String) {
+    print("[PostHog] \(message)")
+}
+
 @objc(PosthogReactNativeSessionReplay)
 class PosthogReactNativeSessionReplay: NSObject {
     private var config: PostHogConfig?
@@ -8,11 +13,12 @@ class PosthogReactNativeSessionReplay: NSObject {
     func start(
         sessionId: String, sdkOptions: [String: Any], sdkReplayConfig: [String: Any],
         decideReplayConfig: [String: Any], resolve: RCTPromiseResolveBlock,
-        reject: RCTPromiseRejectBlock
+        reject _: RCTPromiseRejectBlock
     ) {
         // we've seen cases where distinctId and anonymousId are not strings, so we need to check and convert them
         guard let sessionIdStr = sessionId as? String else {
-            reject("INVALID_ARGUMENT", "Expected string for sessionId", nil)
+            hedgeLog("Invalid sessionId provided. Expected a string.")
+            resolve(nil)
             return
         }
 
@@ -68,6 +74,7 @@ class PosthogReactNativeSessionReplay: NSObject {
         self.config = config
 
         guard let storageManager = self.config?.storageManager else {
+            hedgeLog("Storage manager is not available in the config.")
             resolve(nil)
             return
         }
@@ -79,11 +86,12 @@ class PosthogReactNativeSessionReplay: NSObject {
 
     @objc(startSession:withResolver:withRejecter:)
     func startSession(
-        sessionId: String, resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock
+        sessionId: String, resolve: RCTPromiseResolveBlock, reject _: RCTPromiseRejectBlock
     ) {
         // we've seen cases where distinctId and anonymousId are not strings, so we need to check and convert them
         guard let sessionIdStr = sessionId as? String else {
-            reject("INVALID_ARGUMENT", "Expected string for sessionId", nil)
+            hedgeLog("Invalid sessionId provided. Expected a string.")
+            resolve(nil)
             return
         }
         PostHogSessionManager.shared.setSessionId(sessionIdStr)
@@ -106,16 +114,18 @@ class PosthogReactNativeSessionReplay: NSObject {
     @objc(identify:withAnonymousId:withResolver:withRejecter:)
     func identify(
         distinctId: String, anonymousId: String, resolve: RCTPromiseResolveBlock,
-        reject: RCTPromiseRejectBlock
+        reject _: RCTPromiseRejectBlock
     ) {
         // we've seen cases where distinctId and anonymousId are not strings, so we need to check and convert them
         guard let distinctIdStr = distinctId as? String,
               let anonymousIdStr = anonymousId as? String
         else {
-            reject("INVALID_ARGUMENT", "Expected strings for distinctId and anonymousId", nil)
+            hedgeLog("Invalid distinctId or anonymousId provided. Expected strings.")
+            resolve(nil)
             return
         }
         guard let storageManager = config?.storageManager else {
+            hedgeLog("Storage manager is not available in the config.")
             resolve(nil)
             return
         }
