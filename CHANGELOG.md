@@ -1,6 +1,8 @@
 ## Next
 
-- fix: update posthog-android dependency
+## 1.1.2 - 2025-08-11
+
+- chore: update posthog-android dependency
 
 ## 1.1.1 - 2025-06-24
 
