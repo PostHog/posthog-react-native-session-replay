@@ -1,5 +1,7 @@
 ## Next
 
+- fix: update posthog-android dependency
+
 ## 1.1.1 - 2025-06-24
 
 - fix: check if distinctId and anonId are a string before using it
