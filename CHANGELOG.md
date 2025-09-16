@@ -1,5 +1,9 @@
 ## Next
 
+## 1.1.5 - 2025-09-16
+
+- chore: update posthog-android dependency to 3.21.3
+
 ## 1.1.4 - 2025-09-11
 
 - chore: update posthog-android dependency to 3.21.2
