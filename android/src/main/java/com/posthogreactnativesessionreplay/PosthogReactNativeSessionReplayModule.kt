@@ -44,7 +44,14 @@ class PosthogReactNativeSessionReplayModule(
           val maskAllTextInputs = sdkReplayConfig.getBoolean("maskAllTextInputs")
           val maskAllImages = sdkReplayConfig.getBoolean("maskAllImages")
           val captureLog = sdkReplayConfig.getBoolean("captureLog")
-          val debouncerDelayMs = sdkReplayConfig.getInt("androidDebouncerDelayMs")
+
+          // read throttleDelayMs and use androidDebouncerDelayMs as a fallback for back compatibility
+          val throttleDelayMs =
+            if (sdkReplayConfig.hasKey("throttleDelayMs")) {
+              sdkReplayConfig.getInt("throttleDelayMs")
+            } else {
+              sdkReplayConfig.getInt("androidDebouncerDelayMs")
+            }
 
           val endpoint = decideReplayConfig.getString("endpoint")
 
@@ -79,7 +86,7 @@ class PosthogReactNativeSessionReplayModule(
               sessionReplay = true
               sessionReplayConfig.screenshot = true
               sessionReplayConfig.captureLogcat = captureLog
-              sessionReplayConfig.throttleDelayMs = debouncerDelayMs.toLong()
+              sessionReplayConfig.throttleDelayMs = throttleDelayMs.toLong()
               sessionReplayConfig.maskAllImages = maskAllImages
               sessionReplayConfig.maskAllTextInputs = maskAllTextInputs
 

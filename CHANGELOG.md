@@ -1,5 +1,9 @@
 ## Next
 
+## 1.2.0 - 2025-09-17
+
+- chore: add support for throttleDelayMs
+
 ## 1.1.5 - 2025-09-16
 
 - chore: update posthog-android dependency to 3.21.3
