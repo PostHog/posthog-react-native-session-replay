@@ -45,9 +45,10 @@ class PosthogReactNativeSessionReplay: NSObject {
         config.sessionReplayConfig.maskAllSandboxedViews = maskAllSandboxedViews
 
         // read throttleDelayMs and use iOSdebouncerDelayMs as a fallback for back compatibility
-        guard let throttleDelayMs = sdkReplayConfig["throttleDelayMs"] as? Int else {
-            return sdkReplayConfig["iOSdebouncerDelayMs"] as? Int ?? 1000
-        }
+        let throttleDelayMs =
+            (sdkReplayConfig["throttleDelayMs"] as? Int)
+                ?? (sdkReplayConfig["iOSdebouncerDelayMs"] as? Int)
+                ?? 1000
 
         let timeInterval: TimeInterval = Double(throttleDelayMs) / 1000.0
         config.sessionReplayConfig.throttleDelay = timeInterval
