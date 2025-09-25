@@ -196,7 +196,7 @@ class PosthogReactNativeSessionReplayModule(
 
     // Default session replay configuration values
     const val DEFAULT_MASK_ALL_TEXT_INPUTS = true
-    const val DEFAULT_MASK_ALL_IMAGES = false
+    const val DEFAULT_MASK_ALL_IMAGES = true
     const val DEFAULT_CAPTURE_LOG = true
     const val DEFAULT_FLUSH_AT = 20
     const val DEFAULT_THROTTLE_DELAY_MS = 1000
