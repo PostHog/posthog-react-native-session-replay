@@ -1,5 +1,7 @@
 ## Next
 
+- fix: Prevent exceptions on missing config keys
+
 ## 1.2.0 - 2025-09-17
 
 - chore: add support for throttleDelayMs

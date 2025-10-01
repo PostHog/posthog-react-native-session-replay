@@ -37,20 +37,22 @@ class PosthogReactNativeSessionReplayModule(
           PostHogSessionManager.setSessionId(uuid)
 
           val context = this.reactApplicationContext
-          val apiKey = sdkOptions.getString("apiKey") ?: ""
-          val host = sdkOptions.getString("host") ?: PostHogConfig.DEFAULT_HOST
-          val debugValue = sdkOptions.getBoolean("debug")
+          val apiKey = runCatching { sdkOptions.getString("apiKey") }.getOrNull() ?: ""
+          val host = runCatching { sdkOptions.getString("host") }.getOrNull() ?: PostHogConfig.DEFAULT_HOST
+          val debugValue = runCatching { sdkOptions.getBoolean("debug") }.getOrNull() ?: false
 
-          val maskAllTextInputs = sdkReplayConfig.getBoolean("maskAllTextInputs")
-          val maskAllImages = sdkReplayConfig.getBoolean("maskAllImages")
-          val captureLog = sdkReplayConfig.getBoolean("captureLog")
+          val maskAllTextInputs = runCatching { sdkReplayConfig.getBoolean("maskAllTextInputs") }.getOrNull() ?: DEFAULT_MASK_ALL_TEXT_INPUTS
+          val maskAllImages = runCatching { sdkReplayConfig.getBoolean("maskAllImages") }.getOrNull() ?: DEFAULT_MASK_ALL_IMAGES
+          val captureLog = runCatching { sdkReplayConfig.getBoolean("captureLog") }.getOrNull() ?: DEFAULT_CAPTURE_LOG
 
           // read throttleDelayMs and use androidDebouncerDelayMs as a fallback for back compatibility
           val throttleDelayMs =
             if (sdkReplayConfig.hasKey("throttleDelayMs")) {
               sdkReplayConfig.getInt("throttleDelayMs")
-            } else {
+            } else if (sdkReplayConfig.hasKey("androidDebouncerDelayMs")) {
               sdkReplayConfig.getInt("androidDebouncerDelayMs")
+            } else {
+              DEFAULT_THROTTLE_DELAY_MS
             }
 
           val endpoint = decideReplayConfig.getString("endpoint")
@@ -69,12 +71,9 @@ class PosthogReactNativeSessionReplayModule(
               logError("parse anonymousId", e)
               ""
             }
-          val theSdkVersion = sdkOptions.getString("sdkVersion")
+          val theSdkVersion = runCatching { sdkOptions.getString("sdkVersion") }.getOrNull()
 
-          var theFlushAt = 20
-          if (sdkOptions.hasKey("flushAt")) {
-            theFlushAt = sdkOptions.getInt("flushAt")
-          }
+          val theFlushAt = runCatching { sdkOptions.getInt("flushAt") }.getOrNull() ?: DEFAULT_FLUSH_AT
 
           val config =
             PostHogAndroidConfig(apiKey, host).apply {
@@ -194,5 +193,12 @@ class PosthogReactNativeSessionReplayModule(
   companion object {
     const val NAME = "PosthogReactNativeSessionReplay"
     const val POSTHOG_TAG = "PostHog"
+
+    // Default session replay configuration values
+    const val DEFAULT_MASK_ALL_TEXT_INPUTS = true
+    const val DEFAULT_MASK_ALL_IMAGES = true
+    const val DEFAULT_CAPTURE_LOG = true
+    const val DEFAULT_FLUSH_AT = 20
+    const val DEFAULT_THROTTLE_DELAY_MS = 1000
   }
 }
