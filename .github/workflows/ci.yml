@@ -126,7 +126,7 @@ jobs:
       - name: Build example for iOS
         run: |
           cd example/ios
-          xcrun xcodebuild -workspace PosthogReactNativeSessionReplayExample.xcworkspace -configuration Debug -scheme posthog-react-native-session-replay -destination generic/platform=ios
+          xcrun xcodebuild -workspace PosthogReactNativeSessionReplayExample.xcworkspace -configuration Debug -scheme posthog-react-native-session-replay -destination generic/platform=ios | xcpretty
 
   build-ios-static-framework:
     runs-on: macos-14
@@ -148,7 +148,7 @@ jobs:
       - name: Build example for iOS
         run: |
           cd example/ios
-          xcrun xcodebuild -workspace PosthogReactNativeSessionReplayExample.xcworkspace -configuration Debug -scheme posthog-react-native-session-replay -destination generic/platform=ios
+          xcrun xcodebuild -workspace PosthogReactNativeSessionReplayExample.xcworkspace -configuration Debug -scheme posthog-react-native-session-replay -destination generic/platform=ios | xcpretty
 
   build-ios-static-lib:
     runs-on: macos-14
@@ -181,4 +181,4 @@ jobs:
       - name: Build example for iOS
         run: |
           cd example/ios
-          xcrun xcodebuild -workspace PosthogReactNativeSessionReplayExample.xcworkspace -configuration Debug -scheme posthog-react-native-session-replay -destination generic/platform=ios
+          xcrun xcodebuild -workspace PosthogReactNativeSessionReplayExample.xcworkspace -configuration Debug -scheme posthog-react-native-session-replay -destination generic/platform=ios | xcpretty
