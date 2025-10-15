@@ -1,6 +1,7 @@
 ## Next
 
 - fix: Prevent exceptions on missing config keys
+- fix: Prevent native iOS surveys from showing
 
 ## 1.2.0 - 2025-09-17
 

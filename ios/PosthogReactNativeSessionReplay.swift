@@ -35,6 +35,10 @@ class PosthogReactNativeSessionReplay: NSObject {
         config.debug = debug
         config.sessionReplayConfig.screenshotMode = true
 
+        if #available(iOS 15.0, *) {
+            config.surveys = false
+        }
+
         let maskAllTextInputs = sdkReplayConfig["maskAllTextInputs"] as? Bool ?? true
         config.sessionReplayConfig.maskAllTextInputs = maskAllTextInputs
 
