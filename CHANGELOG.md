@@ -1,5 +1,13 @@
 ## Next
 
+## 1.2.3 - 2025-11-24
+
+- fix: cut a new version for fixing compromised packages
+
+## 1.2.2 - 2025-11-24
+
+- this version is compromised
+
 ## 1.2.1 - 2025-10-15
 
 - fix: Prevent exceptions on missing config keys
