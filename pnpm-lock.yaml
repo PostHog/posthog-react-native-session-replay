@@ -91,6 +91,9 @@ importers:
       '@react-native/babel-preset':
         specifier: 0.75.3
         version: 0.75.3(@babel/core@7.28.5)(@babel/preset-env@7.28.5(@babel/core@7.28.5))
+      '@react-native/gradle-plugin':
+        specifier: 0.75.3
+        version: 0.75.3
       '@react-native/metro-config':
         specifier: 0.75.3
         version: 0.75.3(@babel/core@7.28.5)(@babel/preset-env@7.28.5(@babel/core@7.28.5))

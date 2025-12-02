@@ -60,12 +60,6 @@ To fix formatting errors, run the following:
 pnpm lint --fix
 ```
 
-Remember to add tests for your change if possible. Run the unit tests by:
-
-```sh
-pnpm test
-```
-
 ### Commit message convention
 
 We follow the [conventional commits specification](https://www.conventionalcommits.org/en) for our commit messages:
@@ -104,7 +98,6 @@ The `package.json` file contains various scripts for common tasks:
 - `pnpm install`: setup project by installing dependencies.
 - `pnpm typecheck`: type-check files with TypeScript.
 - `pnpm lint`: lint files with ESLint.
-- `pnpm test`: run unit tests with Jest.
 - `pnpm example start`: start the Metro server for the example app.
 - `pnpm example android`: run the example app on Android.
 - `pnpm example ios`: run the example app on iOS.
