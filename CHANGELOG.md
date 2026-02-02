@@ -1,5 +1,7 @@
 ## Next
 
+- feat: add startRecording and stopRecording bridge methods for manual session replay control
+
 ## 1.2.3 - 2025-11-24
 
 - fix: cut a new version for fixing compromised packages

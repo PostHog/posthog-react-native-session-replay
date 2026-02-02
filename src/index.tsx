@@ -51,6 +51,14 @@ export function identify(
   return PosthogReactNativeSessionReplay.identify(distinctId, anonymousId);
 }
 
+export function startRecording(resumeCurrent: boolean): Promise<void> {
+  return PosthogReactNativeSessionReplay.startRecording(resumeCurrent);
+}
+
+export function stopRecording(): Promise<void> {
+  return PosthogReactNativeSessionReplay.stopRecording();
+}
+
 export interface PostHogReactNativeSessionReplayModule {
   start: (
     sessionId: string,
@@ -66,6 +74,10 @@ export interface PostHogReactNativeSessionReplayModule {
   isEnabled: () => Promise<boolean>;
 
   identify: (distinctId: string, anonymousId: string) => Promise<void>;
+
+  startRecording: (resumeCurrent: boolean) => Promise<void>;
+
+  stopRecording: () => Promise<void>;
 }
 
 const PostHogReactNativeSessionReplay: PostHogReactNativeSessionReplayModule = {
@@ -74,6 +86,8 @@ const PostHogReactNativeSessionReplay: PostHogReactNativeSessionReplayModule = {
   endSession,
   isEnabled,
   identify,
+  startRecording,
+  stopRecording,
 };
 
 export default PostHogReactNativeSessionReplay;
