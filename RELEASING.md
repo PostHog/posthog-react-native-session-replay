@@ -1,48 +1,94 @@
-Releasing
-=========
+# Releasing
 
- 1. Update the CHANGELOG.md with the version and date 
- 2. Choose a tag name (e.g. `3.0.0`), this is the version number of the release.
-    1. Preview releases follow the pattern `3.0.0-alpha.1`, `3.0.0-beta.1`, `3.0.0-RC.1`
-    2. Execute the script with the tag's name, the script will update the version file and create a tag.
+This repository uses [Changesets](https://github.com/changesets/changesets) for version management and an automated GitHub Actions workflow for releases.
 
-    ```bash
-    ./scripts/prepare-release.sh 3.0.0
-    ```
+## How to Release
 
- 3. Go to [GH Releases](https://github.com/PostHog/posthog-react-native-session-replay/releases)
- 4. Choose a release name (e.g. `3.0.0`), and the tag you just created, ideally the same.
- 5. Write a description of the release.
- 6. Publish the GH release.
- 7. Publish the package to NPM (see notes below)
- 8. Done
+### 1. Add a Changeset
 
-### Publishing to NPM
+When making changes that should be released, add a changeset:
 
-> **Note:** The package is currently published at [posthog-react-native-session-replay](https://www.npmjs.com/package/posthog-react-native-session-replay) under the [manoelposthog](https://www.npmjs.com/~manoelposthog) user. This should eventually be moved to the posthog user.
+```bash
+pnpm changeset
+```
 
-After completing steps 1-6 above, follow these steps to publish to NPM:
+This will prompt you to:
+- Select the type of version bump (patch, minor, major)
+- Write a summary of the changes
 
-#### Prerequisites
-- Ensure you have access to publish to the `posthog-react-native-session-replay` package on NPM
-- If you don't have access, contact the package maintainer (currently https://www.npmjs.com/~manoelposthog) to grant your NPM user access to the package
+The changeset file will be created in the `.changeset/` directory.
 
-#### Steps
+### 2. Create a Pull Request
 
-1. **Install dependencies** (if not done already, required for the build process):
-   ```bash
-   npm install
-   ```
+Create a PR with your changes and the changeset file(s).
 
-2. **Authenticate with NPM** (if not already authenticated):
-   ```bash
-   npm adduser
-   ```
-   Follow the prompts to log in with your NPM credentials.
+### 3. Add the `release` Label
 
-3. **Publish the package**:
-   ```bash
-   npm publish
-   ```
+When the PR is ready to be released, add the `release` label to it.
 
-The `npm publish` command will automatically run the `prepare` script which builds the package using `react-native-builder-bob` before publishing.
+### 4. Merge the PR
+
+When the PR is merged to `main`, the release workflow will automatically:
+
+1. Check for changesets
+2. Notify the client libraries team in Slack for approval
+3. Wait for approval from a maintainer (via GitHub environment protection)
+4. Once approved:
+   - Apply changesets and bump the version
+   - Update the CHANGELOG.md
+   - Commit the version bump to `main`
+   - Publish the package to NPM
+   - Create a git tag and GitHub release
+
+### Manual Trigger
+
+You can also manually trigger the release workflow from the [Actions tab](https://github.com/PostHog/posthog-react-native-session-replay/actions/workflows/release.yml) by clicking "Run workflow".
+
+## Version Bumping
+
+Changesets handles version bumping automatically based on the changesets you create:
+
+- **patch**: Bug fixes, documentation updates, internal changes (e.g., `1.2.3` → `1.2.4`)
+- **minor**: New features, non-breaking changes (e.g., `1.2.3` → `1.3.0`)
+- **major**: Breaking changes (e.g., `1.2.3` → `2.0.0`)
+
+## Pre-release Versions
+
+For pre-release versions (alpha, beta, RC), you can manually enter pre-release mode:
+
+```bash
+pnpm changeset pre enter alpha  # or beta, rc
+pnpm changeset version
+```
+
+To exit pre-release mode:
+
+```bash
+pnpm changeset pre exit
+```
+
+## NPM Package
+
+The package is published as [`posthog-react-native-session-replay`](https://www.npmjs.com/package/posthog-react-native-session-replay) on NPM.
+
+## Troubleshooting
+
+### No changesets found
+
+If the release workflow fails with "No changesets found", ensure your PR includes at least one changeset file in the `.changeset/` directory.
+
+### Release not triggered
+
+Make sure the PR has the `release` label applied before merging.
+
+### Manual NPM publish (emergency only)
+
+In case of automation failure, you can manually publish:
+
+```bash
+pnpm install
+pnpm prepare  # builds the package
+npm publish
+```
+
+You'll need to be authenticated with NPM and have publish access to the package.
