@@ -27,7 +27,7 @@ jobs:
             runner: ubuntu-latest
           - language: swift
             build-mode: manual
-            runner: macos-14
+            runner: macos-14-xlarge
           - language: java-kotlin
             build-mode: manual
             runner: ubuntu-latest
@@ -88,7 +88,8 @@ jobs:
         env:
           JAVA_OPTS: '-XX:MaxHeapSize=6g'
         run: |
-          pnpm turbo run build:android
+          cd example
+          pnpm run build:android
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v4
