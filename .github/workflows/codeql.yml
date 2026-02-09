@@ -87,6 +87,7 @@ jobs:
         if: ${{ matrix.language == 'java-kotlin' }}
         env:
           JAVA_OPTS: '-XX:MaxHeapSize=6g'
+          TURBO_TELEMETRY_DISABLED: 1
         run: |
           pnpm turbo run build:android
 
