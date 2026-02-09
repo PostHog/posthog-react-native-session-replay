@@ -199,11 +199,6 @@ jobs:
         if: steps.check-package-version.outputs.is-new-version == 'true'
         run: pnpm prepare
 
-      - name: Setup NPM auth
-        if: steps.check-package-version.outputs.is-new-version == 'true'
-        run: |
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-
       - name: Tag repository
         if: steps.check-package-version.outputs.is-new-version == 'true'
         run: |
