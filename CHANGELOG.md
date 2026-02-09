@@ -1,5 +1,11 @@
 ## Next
 
+## 1.2.4
+
+### Patch Changes
+
+- 42f77c5: test: release posthog-react-native-session-replay with approval workflow
+
 ## 1.2.3 - 2025-11-24
 
 - fix: cut a new version for fixing compromised packages
