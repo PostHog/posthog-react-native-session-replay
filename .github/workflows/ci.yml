@@ -61,10 +61,12 @@ jobs:
         env:
           TURBO_TELEMETRY_DISABLED: 1
         run: |
+          set +e
           # Get turbo output and extract just the JSON part (everything from first '{')
-          TURBO_OUTPUT=$(pnpm turbo run build:android --cache-dir="${{ env.TURBO_CACHE_DIR }}" --dry=json 2>/dev/null)
+          TURBO_OUTPUT=$(pnpm turbo run build:android --cache-dir="${{ env.TURBO_CACHE_DIR }}" --dry=json 2>&1)
           TURBO_JSON=$(echo "$TURBO_OUTPUT" | sed -n '/^{/,$p')
           TURBO_CACHE_STATUS=$(echo "$TURBO_JSON" | jq -r '.tasks[] | select(.task == "build:android") | .cache.status' 2>/dev/null || echo "MISS")
+          set -e
 
           if [[ $TURBO_CACHE_STATUS == "HIT" ]]; then
             echo "turbo_cache_hit=1" >> $GITHUB_ENV
