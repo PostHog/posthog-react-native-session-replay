@@ -3,6 +3,7 @@
   "tasks": {
     "build:android": {
       "env": ["ORG_GRADLE_PROJECT_newArchEnabled"],
+      "passThroughEnv": ["ANDROID_HOME", "ANDROID_SDK_ROOT", "JAVA_HOME"],
       "inputs": [
         "package.json",
         "android",
