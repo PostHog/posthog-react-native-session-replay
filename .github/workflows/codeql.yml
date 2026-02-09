@@ -27,7 +27,7 @@ jobs:
             runner: ubuntu-latest
           - language: swift
             build-mode: manual
-            runner: macos-14
+            runner: macos-14-xlarge
           - language: java-kotlin
             build-mode: manual
             runner: ubuntu-latest
