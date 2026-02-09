@@ -61,8 +61,7 @@ jobs:
         env:
           TURBO_TELEMETRY_DISABLED: 1
         run: |
-          TURBO_OUTPUT=$(pnpm turbo run build:android --cache-dir="${{ env.TURBO_CACHE_DIR }}" --dry=json 2>/dev/null)
-          TURBO_CACHE_STATUS=$(echo "$TURBO_OUTPUT" | node -p "JSON.parse(require('fs').readFileSync('/dev/stdin', 'utf8')).tasks.find(t => t.task === 'build:android').cache.status")
+          TURBO_CACHE_STATUS=$(pnpm turbo run build:android --cache-dir="${{ env.TURBO_CACHE_DIR }}" --dry=json 2>/dev/null | jq -r '.tasks[] | select(.task == "build:android") | .cache.status')
 
           if [[ $TURBO_CACHE_STATUS == "HIT" ]]; then
             echo "turbo_cache_hit=1" >> $GITHUB_ENV
