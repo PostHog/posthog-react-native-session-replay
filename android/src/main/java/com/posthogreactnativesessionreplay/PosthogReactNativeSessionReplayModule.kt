@@ -183,6 +183,31 @@ class PosthogReactNativeSessionReplayModule(
     }
   }
 
+  @ReactMethod
+  fun startRecording(
+    resumeCurrent: Boolean,
+    promise: Promise,
+  ) {
+    try {
+      PostHog.startSessionReplay(resumeCurrent)
+    } catch (e: Throwable) {
+      logError("startRecording", e)
+    } finally {
+      promise.resolve(null)
+    }
+  }
+
+  @ReactMethod
+  fun stopRecording(promise: Promise) {
+    try {
+      PostHog.stopSessionReplay()
+    } catch (e: Throwable) {
+      logError("stopRecording", e)
+    } finally {
+      promise.resolve(null)
+    }
+  }
+
   private fun logError(
     method: String,
     error: Throwable,

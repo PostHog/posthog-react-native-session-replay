@@ -155,4 +155,18 @@ class PosthogReactNativeSessionReplay: NSObject {
             storageManager.setDistinctId(distinctId)
         }
     }
+
+    @objc(startRecording:withResolver:withRejecter:)
+    func startRecording(
+        resumeCurrent: Bool, resolve: RCTPromiseResolveBlock, reject _: RCTPromiseRejectBlock
+    ) {
+        PostHogSDK.shared.startSessionRecording(resumeCurrent: resumeCurrent)
+        resolve(nil)
+    }
+
+    @objc(stopRecording:withRejecter:)
+    func stopRecording(resolve: RCTPromiseResolveBlock, reject _: RCTPromiseRejectBlock) {
+        PostHogSDK.shared.stopSessionRecording()
+        resolve(nil)
+    }
 }
