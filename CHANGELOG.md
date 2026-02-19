@@ -1,6 +1,10 @@
 ## Next
 
-- feat: add startRecording and stopRecording bridge methods for manual session replay control
+## 1.2.4
+
+### Patch Changes
+
+- 42f77c5: test: release posthog-react-native-session-replay with approval workflow
 
 ## 1.2.3 - 2025-11-24
 

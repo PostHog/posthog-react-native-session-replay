@@ -1,0 +1,97 @@
+name: "CodeQL Advanced"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  analyze:
+    name: Analyze (${{ matrix.language }})
+    runs-on: ${{ matrix.runner }}
+    permissions:
+      security-events: write # for uploading CodeQL results
+      packages: read
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - language: javascript-typescript
+            build-mode: none
+            runner: ubuntu-latest
+          - language: actions
+            build-mode: none
+            runner: ubuntu-latest
+          - language: swift
+            build-mode: manual
+            runner: macos-14-xlarge
+          - language: java-kotlin
+            build-mode: manual
+            runner: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Setup pnpm
+        if: ${{ matrix.language == 'swift' || matrix.language == 'java-kotlin' }}
+        uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4
+
+      - name: Setup Node.js
+        if: ${{ matrix.language == 'swift' || matrix.language == 'java-kotlin' }}
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        if: ${{ matrix.language == 'swift' || matrix.language == 'java-kotlin' }}
+        run: pnpm install --frozen-lockfile
+
+      - name: Install JDK
+        if: ${{ matrix.language == 'java-kotlin' }}
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Finalize Android SDK
+        if: ${{ matrix.language == 'java-kotlin' }}
+        run: |
+          /bin/bash -c "yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses > /dev/null"
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
+          queries: security-and-quality
+
+      - name: Install cocoapods
+        if: ${{ matrix.language == 'swift' }}
+        run: |
+          cd example/ios
+          pod install
+        env:
+          NO_FLIPPER: 1
+
+      - name: Build iOS
+        if: ${{ matrix.language == 'swift' }}
+        run: |
+          cd example/ios
+          xcrun xcodebuild -workspace PosthogReactNativeSessionReplayExample.xcworkspace -configuration Debug -scheme posthog-react-native-session-replay -destination generic/platform=ios | xcpretty
+
+      - name: Build Android
+        if: ${{ matrix.language == 'java-kotlin' }}
+        env:
+          JAVA_OPTS: '-XX:MaxHeapSize=6g'
+        run: |
+          cd example
+          pnpm run build:android
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v4
+        with:
+          category: '/language:${{matrix.language}}'

@@ -1,6 +1,12 @@
 name: Setup
 description: Setup Node.js and install dependencies
 
+inputs:
+  install:
+    description: 'Whether to install dependencies'
+    required: false
+    default: 'true'
+
 runs:
   using: composite
   steps:
@@ -26,6 +32,6 @@ runs:
           ${{ runner.os }}-pnpm-
 
     - name: Install dependencies
-      if: steps.pnpm-cache.outputs.cache-hit != 'true'
+      if: inputs.install == 'true'
       run: pnpm install --frozen-lockfile
       shell: bash
