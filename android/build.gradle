@@ -95,8 +95,6 @@ dependencies {
   //noinspection GradleDynamicVersion
   implementation "com.facebook.react:react-native:+"
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-  // Includes fix for react-native session rotation
-  // see: https://github.com/PostHog/posthog-android/pull/412
   implementation "com.posthog:posthog-android:3.32.1"
 }
 
