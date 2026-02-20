@@ -1,5 +1,11 @@
 ## Next
 
+## 1.3.0
+
+### Minor Changes
+
+- 56343f7: - feat: add startRecording and stopRecording bridge methods for manual session replay control
+
 ## 1.2.4
 
 ### Patch Changes
