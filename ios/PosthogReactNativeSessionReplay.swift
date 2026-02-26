@@ -1,6 +1,6 @@
 import PostHog
 
-// Meant for internally logging PostHog related things
+/// Meant for internally logging PostHog related things
 private func hedgeLog(_ message: String) {
     print("[PostHog] \(message)")
 }
@@ -60,8 +60,7 @@ class PosthogReactNativeSessionReplay: NSObject {
         let captureNetworkTelemetry = sdkReplayConfig["captureNetworkTelemetry"] as? Bool ?? true
         config.sessionReplayConfig.captureNetworkTelemetry = captureNetworkTelemetry
 
-        // fallback matches posthog-ios default
-        let captureLog = sdkReplayConfig["captureLog"] as? Bool ?? false
+        if let captureLog = sdkReplayConfig["captureLog"] as? Bool ?? true
         config.sessionReplayConfig.captureLogs = captureLog
 
         let endpoint = decideReplayConfig["endpoint"] as? String ?? ""
