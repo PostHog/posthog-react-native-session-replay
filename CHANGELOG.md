@@ -1,5 +1,11 @@
 ## Next
 
+## 1.4.0
+
+### Minor Changes
+
+- 8a63db7: feat: enable captureLog for iOS
+
 ## 1.3.0
 
 ### Minor Changes
