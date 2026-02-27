@@ -55,7 +55,7 @@ class PosthogReactNativeSessionReplayModule(
               DEFAULT_THROTTLE_DELAY_MS
             }
 
-          val sampleRate = runCatching { sdkReplayConfig.getDouble("sampleRate") }.getOrNull() ?: null
+          val sampleRate = runCatching { sdkReplayConfig.getDouble("sampleRate") }.getOrNull()
 
           val endpoint = decideReplayConfig.getString("endpoint")
 
