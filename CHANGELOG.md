@@ -1,5 +1,11 @@
 ## Next
 
+## 1.5.0
+
+### Minor Changes
+
+- 81af58f: chore: add sampleRate support for android and ios
+
 ## 1.4.1
 
 ### Patch Changes
