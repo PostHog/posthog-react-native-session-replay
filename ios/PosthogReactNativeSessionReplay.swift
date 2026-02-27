@@ -63,6 +63,9 @@ class PosthogReactNativeSessionReplay: NSObject {
         let captureLog = sdkReplayConfig["captureLog"] as? Bool ?? true
         config.sessionReplayConfig.captureLogs = captureLog
 
+        let sampleRate = sdkReplayConfig["sampleRate"] as? Double ?? nil
+        config.sessionReplayConfig.sampleRate = sampleRate
+
         let endpoint = decideReplayConfig["endpoint"] as? String ?? ""
         if !endpoint.isEmpty {
             config.snapshotEndpoint = endpoint
