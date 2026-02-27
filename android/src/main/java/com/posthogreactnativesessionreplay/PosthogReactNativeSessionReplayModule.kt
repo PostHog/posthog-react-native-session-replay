@@ -55,6 +55,8 @@ class PosthogReactNativeSessionReplayModule(
               DEFAULT_THROTTLE_DELAY_MS
             }
 
+          val sampleRate = runCatching { sdkReplayConfig.getDouble("sampleRate") }.getOrNull()
+
           val endpoint = decideReplayConfig.getString("endpoint")
 
           val distinctId =
@@ -88,6 +90,7 @@ class PosthogReactNativeSessionReplayModule(
               sessionReplayConfig.throttleDelayMs = throttleDelayMs.toLong()
               sessionReplayConfig.maskAllImages = maskAllImages
               sessionReplayConfig.maskAllTextInputs = maskAllTextInputs
+              sessionReplayConfig.sampleRate = sampleRate
 
               if (!endpoint.isNullOrEmpty()) {
                 snapshotEndpoint = endpoint
