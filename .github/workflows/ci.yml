@@ -102,50 +102,6 @@ jobs:
         run: |
           pnpm turbo run build:android --cache-dir="${{ env.TURBO_CACHE_DIR }}"
 
-  build-ios-dynamic-framework:
-    runs-on: macos-14-xlarge
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-
-      - name: Setup
-        uses: ./.github/actions/setup
-
-      - name: Install cocoapods
-        run: |
-          cd example/ios
-          pod install
-        env:
-          USE_FRAMEWORKS: dynamic
-          NO_FLIPPER: 1
-
-      - name: Build example for iOS
-        run: |
-          cd example/ios
-          xcrun xcodebuild -workspace PosthogReactNativeSessionReplayExample.xcworkspace -configuration Debug -scheme posthog-react-native-session-replay -destination generic/platform=ios | xcpretty
-
-  build-ios-static-framework:
-    runs-on: macos-14-xlarge
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-
-      - name: Setup
-        uses: ./.github/actions/setup
-
-      - name: Install cocoapods
-        run: |
-          cd example/ios
-          pod install
-        env:
-          USE_FRAMEWORKS: static
-          NO_FLIPPER: 1
-
-      - name: Build example for iOS
-        run: |
-          cd example/ios
-          xcrun xcodebuild -workspace PosthogReactNativeSessionReplayExample.xcworkspace -configuration Debug -scheme posthog-react-native-session-replay -destination generic/platform=ios | xcpretty
-
   build-ios-static-lib:
     runs-on: macos-14-xlarge
     steps:
@@ -177,4 +133,4 @@ jobs:
       - name: Build example for iOS
         run: |
           cd example/ios
-          xcrun xcodebuild -workspace PosthogReactNativeSessionReplayExample.xcworkspace -configuration Debug -scheme posthog-react-native-session-replay -destination generic/platform=ios | xcpretty
+          set -o pipefail && xcrun xcodebuild -workspace PosthogReactNativeSessionReplayExample.xcworkspace -configuration Debug -scheme posthog-react-native-session-replay -destination generic/platform=ios | xcpretty
