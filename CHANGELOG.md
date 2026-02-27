@@ -1,5 +1,11 @@
 ## Next
 
+## 1.4.1
+
+### Patch Changes
+
+- d4a5dc9: fix: build error on iOS
+
 ## 1.4.0
 
 ### Minor Changes
