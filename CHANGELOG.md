@@ -1,5 +1,11 @@
 ## Next
 
+## 1.5.1
+
+### Patch Changes
+
+- 126ce32: fix: bump Android SDK to prevent SIGSEGV crash
+
 ## 1.5.0
 
 ### Minor Changes
