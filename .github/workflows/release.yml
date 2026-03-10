@@ -115,18 +115,19 @@ jobs:
 
       - name: Commit version bump and lockfile
         id: commit-version-bump
+        env:
+          GITHUB_TOKEN: ${{ steps.releaser.outputs.token }}
+          NEW_VERSION: ${{ steps.apply-changesets.outputs.new-version }}
         run: |
           git add -A
           if git diff --staged --quiet; then
             echo "No changes to commit"
             echo "committed=false" >> "$GITHUB_OUTPUT"
           else
-            git commit -m "chore: release v${{ steps.apply-changesets.outputs.new-version }} [version bump]"
+            git commit -m "chore: release $NEW_VERSION [version bump]"
             git push origin main
             echo "committed=true" >> "$GITHUB_OUTPUT"
           fi
-        env:
-          GITHUB_TOKEN: ${{ steps.releaser.outputs.token }}
 
       - name: Notify Slack - Failed
         continue-on-error: true
@@ -136,7 +137,7 @@ jobs:
           slack_bot_token: ${{ secrets.SLACK_CLIENT_LIBRARIES_BOT_TOKEN }}
           slack_channel_id: ${{ vars.SLACK_APPROVALS_CLIENT_LIBRARIES_CHANNEL_ID }}
           thread_ts: ${{ needs.notify-approval-needed.outputs.slack_ts }}
-          message: '❌ Failed to bump version for `posthog-react-native-session-replay@v${{ steps.apply-changesets.outputs.new-version }}`! <https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|View logs>'
+          message: '❌ Failed to bump version for `posthog-react-native-session-replay@${{ steps.apply-changesets.outputs.new-version }}`! <https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|View logs>'
           emoji_reaction: 'x'
 
   notify-rejected:
@@ -212,8 +213,10 @@ jobs:
 
       - name: Tag repository
         if: steps.check-package-version.outputs.is-new-version == 'true'
+        env:
+          COMMITTED_VERSION: ${{ steps.check-package-version.outputs.committed-version }}
         run: |
-          git tag -a "v${{ steps.check-package-version.outputs.committed-version }}" -m "v${{ steps.check-package-version.outputs.committed-version }}"
+          git tag -a "$COMMITTED_VERSION" -m "$COMMITTED_VERSION"
 
       - name: Publish to NPM
         if: steps.check-package-version.outputs.is-new-version == 'true'
@@ -223,13 +226,16 @@ jobs:
 
       - name: Push tag to GitHub
         if: steps.check-package-version.outputs.is-new-version == 'true'
+        env:
+          COMMITTED_VERSION: ${{ steps.check-package-version.outputs.committed-version }}
         run: |
-          git push origin "v${{ steps.check-package-version.outputs.committed-version }}"
+          git push origin "$COMMITTED_VERSION"
 
       - name: Create GitHub release
         if: steps.check-package-version.outputs.is-new-version == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
+          COMMITTED_VERSION: ${{ steps.check-package-version.outputs.committed-version }}
         run: |
           # Read from the first until the second header in the changelog file
           LAST_CHANGELOG_ENTRY=$(awk -v defText="see CHANGELOG.md" '/^## Next$/{next} /^## /{if (flag) exit; flag=1} flag && /^##$/{exit} flag; END{if (!flag) print defText}' CHANGELOG.md)
@@ -238,9 +244,9 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             /repos/${{ github.repository }}/releases \
-            -f tag_name="v${{ steps.check-package-version.outputs.committed-version }}" \
+            -f tag_name="$COMMITTED_VERSION" \
             -f target_commitish='main' \
-            -f name="v${{ steps.check-package-version.outputs.committed-version }}" \
+            -f name="$COMMITTED_VERSION" \
             -f body="$LAST_CHANGELOG_ENTRY" \
             -F draft=false \
             -F prerelease=false \
@@ -269,7 +275,7 @@ jobs:
           slack_bot_token: ${{ secrets.SLACK_CLIENT_LIBRARIES_BOT_TOKEN }}
           slack_channel_id: ${{ vars.SLACK_APPROVALS_CLIENT_LIBRARIES_CHANNEL_ID }}
           thread_ts: ${{ needs.notify-approval-needed.outputs.slack_ts }}
-          message: '❌ Failed to release `posthog-react-native-session-replay@v${{ steps.check-package-version.outputs.committed-version }}`! <https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|View logs>'
+          message: '❌ Failed to release `posthog-react-native-session-replay@${{ steps.check-package-version.outputs.committed-version }}`! <https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|View logs>'
           emoji_reaction: 'x'
 
   notify-released:
