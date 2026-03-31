@@ -5,4 +5,4 @@ packages:
 onlyBuiltDependencies:
   - '@evilmartians/lefthook'
 
-minimumReleaseAge: 4320
+minimumReleaseAge: 10080
