@@ -1,11 +1,11 @@
 buildscript {
     ext {
-        buildToolsVersion = "34.0.0"
-        minSdkVersion = 23
-        compileSdkVersion = 34
-        targetSdkVersion = 34
-        ndkVersion = "25.1.8937393"
-        kotlinVersion = "1.8.0"
+        buildToolsVersion = "36.0.0"
+        minSdkVersion = 24 // RN 0.77 enforces minSdk = 24
+        compileSdkVersion = 36
+        targetSdkVersion = 36
+        ndkVersion = "27.1.12297006"
+        kotlinVersion = "2.0.21"
     }
     repositories {
         google()
@@ -20,13 +20,3 @@ buildscript {
 
 apply plugin: "com.facebook.react.rootproject"
 
-allprojects {
-    configurations.all {
-        resolutionStrategy {
-            force "org.jetbrains.kotlin:kotlin-stdlib:1.9.24"
-            force "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.24"
-            force "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.24"
-            force "org.jetbrains.kotlin:kotlin-stdlib-common:1.9.24"
-        }
-    }
-}
