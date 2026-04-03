@@ -1,5 +1,12 @@
 ## Next
 
+## 1.5.2
+
+### Patch Changes
+
+- 82e8d8b: chore: migrate to Kotlin 2.0
+- 13079ae: - chore: update posthog-android dependency to 3.39.1
+
 ## 1.5.1
 
 ### Patch Changes
