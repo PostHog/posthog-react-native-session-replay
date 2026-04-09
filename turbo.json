@@ -2,6 +2,7 @@
   "$schema": "https://turbo.build/schema.json",
   "tasks": {
     "build:android": {
+      "cache": false,
       "env": ["ORG_GRADLE_PROJECT_newArchEnabled"],
       "passThroughEnv": ["ANDROID_HOME", "ANDROID_SDK_ROOT", "JAVA_HOME"],
       "inputs": [
