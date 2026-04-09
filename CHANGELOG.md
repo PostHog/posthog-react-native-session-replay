@@ -1,5 +1,11 @@
 ## Next
 
+## 1.5.3
+
+### Patch Changes
+
+- 0940a87: Update posthog-android to 3.40.2.
+
 ## 1.5.2
 
 ### Patch Changes
