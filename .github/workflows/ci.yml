@@ -112,6 +112,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      - name: Select latest stable Xcode
+        uses: maxim-lobanov/setup-xcode@1242409711ff5721add51979e9e11e23ebb7e5a4 # v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Print Xcode version
+        run: xcodebuild -version
+
       - name: Setup
         uses: ./.github/actions/setup
 
