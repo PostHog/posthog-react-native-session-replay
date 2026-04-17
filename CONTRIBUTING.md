@@ -11,23 +11,32 @@ This project is a monorepo managed using [pnpm workspaces](https://pnpm.io/works
 - The library package in the root directory.
 - An example app in the `example/` directory.
 
-To get started with the project, run `pnpm install` in the root directory to install the required dependencies for each package:
+To get started with the project, run:
 
 ```sh
-pnpm install
+pnpm install --frozen-lockfile
 ```
 
 > Since the project relies on pnpm workspaces, you cannot use [`npm`](https://github.com/npm/cli) or [`yarn`](https://yarnpkg.com/) for development.
 
-The [example app](/example/) demonstrates usage of the library. You need to run it to test any changes you make.
+## CI-aligned checks
 
-It is configured to use the local version of the library, so any changes you make to the library's source code will be reflected in the example app. Changes to the library's JavaScript code will be reflected in the example app without a rebuild, but native code changes will require a rebuild of the example app.
+Run the same core checks CI uses before opening a PR:
 
-If you want to use Android Studio or XCode to edit the native code, you can open the `example/android` or `example/ios` directories respectively in those editors. To edit the Objective-C or Swift files, open `example/ios/PosthogReactNativeSessionReplayExample.xcworkspace` in XCode and find the source files at `Pods > Development Pods > posthog-react-native-session-replay`.
+```sh
+pnpm lint
+pnpm typecheck
+pnpm prepare
+```
 
-To edit the Java or Kotlin files, open `example/android` in Android studio and find the source files at `posthog-react-native-session-replay` under `Android`.
+CI also verifies the example app builds on Android and iOS. You can run the matching local commands with:
 
-You can use various commands from the root directory to work with the project.
+```sh
+pnpm example build:android
+pnpm example build:ios
+```
+
+## Working with the example app
 
 To start the packager:
 
@@ -47,18 +56,11 @@ To run the example app on iOS:
 pnpm example ios
 ```
 
-Make sure your code passes TypeScript and ESLint. Run the following to verify:
+The example app is configured to use the local version of the library, so JavaScript changes are reflected without a rebuild, while native code changes require rebuilding the example app.
 
-```sh
-pnpm typecheck
-pnpm lint
-```
+If you want to use Android Studio or Xcode to edit the native code, you can open `example/android` or `example/ios` respectively. To edit the Objective-C or Swift files, open `example/ios/PosthogReactNativeSessionReplayExample.xcworkspace` in Xcode and find the source files at `Pods > Development Pods > posthog-react-native-session-replay`.
 
-To fix formatting errors, run the following:
-
-```sh
-pnpm lint --fix
-```
+To edit the Java or Kotlin files, open `example/android` in Android Studio and find the source files at `posthog-react-native-session-replay` under `Android`.
 
 ### Commit message convention
 
@@ -67,39 +69,14 @@ We follow the [conventional commits specification](https://www.conventionalcommi
 - `fix`: bug fixes, e.g. fix crash due to deprecated method.
 - `feat`: new features, e.g. add new method to the module.
 - `refactor`: code refactor, e.g. migrate from class components to hooks.
-- `docs`: changes into documentation, e.g. add usage example for the module..
-- `test`: adding or updating tests, e.g. add integration tests using detox.
+- `docs`: changes to documentation.
+- `test`: adding or updating tests.
 - `chore`: tooling changes, e.g. change CI config.
 
-Our pre-commit hooks verify that your commit message matches this format when committing.
-
-### Linting and tests
-
-[ESLint](https://eslint.org/), [Prettier](https://prettier.io/), [TypeScript](https://www.typescriptlang.org/)
-
-We use [TypeScript](https://www.typescriptlang.org/) for type checking, [ESLint](https://eslint.org/) with [Prettier](https://prettier.io/) for linting and formatting the code, and [Jest](https://jestjs.io/) for testing.
-
-Our pre-commit hooks verify that the linter and tests pass when committing.
-
-### Scripts
-
-The `package.json` file contains various scripts for common tasks:
-
-- `pnpm install`: setup project by installing dependencies.
-- `pnpm typecheck`: type-check files with TypeScript.
-- `pnpm lint`: lint files with ESLint.
-- `pnpm example start`: start the Metro server for the example app.
-- `pnpm example android`: run the example app on Android.
-- `pnpm example ios`: run the example app on iOS.
-
-### Sending a pull request
-
-> **Working on your first pull request?** You can learn how from this _free_ series: [How to Contribute to an Open Source Project on GitHub](https://app.egghead.io/playlists/how-to-contribute-to-an-open-source-project-on-github).
-
-When you're sending a pull request:
+## Sending a pull request
 
 - Prefer small pull requests focused on one change.
-- Verify that linters and tests are passing.
+- Verify that the CI-aligned checks above are passing.
 - Review the documentation to make sure it looks good.
 - Follow the pull request template when opening a pull request.
 - For pull requests that change the API or implementation, discuss with maintainers first by opening an issue.
