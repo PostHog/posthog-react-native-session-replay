@@ -22,13 +22,16 @@ class PosthogReactNativeSessionReplay: NSObject {
             return
         }
 
-        let apiKey = sdkOptions["apiKey"] as? String ?? ""
+        let projectToken =
+            (sdkOptions["projectToken"] as? String)
+                ?? (sdkOptions["apiKey"] as? String)
+                ?? ""
         let host = sdkOptions["host"] as? String ?? PostHogConfig.defaultHost
         let debug = sdkOptions["debug"] as? Bool ?? false
 
         PostHogSessionManager.shared.setSessionId(sessionIdStr)
 
-        let config = PostHogConfig(apiKey: apiKey, host: host)
+        let config = PostHogConfig(projectToken: projectToken, host: host)
         config.sessionReplay = true
         config.captureApplicationLifecycleEvents = false
         config.captureScreenViews = false
