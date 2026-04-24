@@ -1,5 +1,11 @@
 ## Next
 
+## 1.5.5
+
+### Patch Changes
+
+- faac221: Prefer projectToken over apiKey when starting iOS session replay.
+
 ## 1.5.4
 
 ### Patch Changes
