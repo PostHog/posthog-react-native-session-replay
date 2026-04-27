@@ -1,5 +1,11 @@
 ## Next
 
+## 1.5.6
+
+### Patch Changes
+
+- 0af89ff: chore: bump posthog-ios dependency to 3.57.1
+
 ## 1.5.5
 
 ### Patch Changes
