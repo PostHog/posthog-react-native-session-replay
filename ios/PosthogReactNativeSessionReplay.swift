@@ -23,9 +23,15 @@ class PosthogReactNativeSessionReplay: NSObject {
         }
 
         let projectToken =
-            (sdkOptions["projectToken"] as? String)
-                ?? (sdkOptions["apiKey"] as? String)
+            normalizedString(sdkOptions["projectToken"])
+                ?? normalizedString(sdkOptions["apiKey"])
                 ?? ""
+        guard !projectToken.isEmpty else {
+            hedgeLog("Missing projectToken/apiKey. Session replay will not start.")
+            resolve(nil)
+            return
+        }
+
         let host = sdkOptions["host"] as? String ?? PostHogConfig.defaultHost
         let debug = sdkOptions["debug"] as? Bool ?? false
 
@@ -151,6 +157,14 @@ class PosthogReactNativeSessionReplay: NSObject {
         setIdentify(storageManager, distinctId: distinctIdStr, anonymousId: anonymousIdStr)
 
         resolve(nil)
+    }
+
+    private func normalizedString(_ value: Any?) -> String? {
+        guard let stringValue = value as? String else {
+            return nil
+        }
+        let trimmedValue = stringValue.trimmingCharacters(in: .whitespacesAndNewlines)
+        return trimmedValue.isEmpty ? nil : trimmedValue
     }
 
     private func setIdentify(
