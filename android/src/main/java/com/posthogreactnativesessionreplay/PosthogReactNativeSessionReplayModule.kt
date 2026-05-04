@@ -33,11 +33,16 @@ class PosthogReactNativeSessionReplayModule(
     val initRunnable =
       Runnable {
         try {
+          val apiKey = getProjectTokenOrApiKey(sdkOptions)
+          if (apiKey.isEmpty()) {
+            logMessage("start", "Missing projectToken/apiKey. Session replay will not start.")
+            return@Runnable
+          }
+
           val uuid = UUID.fromString(sessionId)
           PostHogSessionManager.setSessionId(uuid)
 
           val context = this.reactApplicationContext
-          val apiKey = runCatching { sdkOptions.getString("apiKey") }.getOrNull() ?: ""
           val host = runCatching { sdkOptions.getString("host") }.getOrNull() ?: PostHogConfig.DEFAULT_HOST
           val debugValue = runCatching { sdkOptions.getBoolean("debug") }.getOrNull() ?: false
 
@@ -171,6 +176,15 @@ class PosthogReactNativeSessionReplayModule(
     }
   }
 
+  private fun getProjectTokenOrApiKey(sdkOptions: ReadableMap): String {
+    val projectToken = runCatching { sdkOptions.getString("projectToken")?.trim() }.getOrNull()
+    if (!projectToken.isNullOrEmpty()) {
+      return projectToken
+    }
+
+    return runCatching { sdkOptions.getString("apiKey")?.trim() }.getOrNull().orEmpty()
+  }
+
   private fun setIdentify(
     cachePreferences: PostHogPreferences?,
     distinctId: String,
@@ -216,6 +230,13 @@ class PosthogReactNativeSessionReplayModule(
     error: Throwable,
   ) {
     Log.println(Log.ERROR, POSTHOG_TAG, "Method $method, error: $error")
+  }
+
+  private fun logMessage(
+    method: String,
+    message: String,
+  ) {
+    Log.println(Log.WARN, POSTHOG_TAG, "Method $method, $message")
   }
 
   companion object {
