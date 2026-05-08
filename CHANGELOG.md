@@ -1,5 +1,11 @@
 ## Next
 
+## 1.5.8
+
+### Patch Changes
+
+- 2b1b341: chore: bridge the experimental iOS background screenshot capture option and bump posthog-ios dependency to 3.58.1
+
 ## 1.5.7
 
 ### Patch Changes
