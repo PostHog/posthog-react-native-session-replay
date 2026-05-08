@@ -16,8 +16,8 @@ Pod::Spec.new do |s|
 
   s.source_files = "ios/**/*.{swift,h,hpp,m,mm,c,cpp}"
 
-  # ~> Version 3.57.6 up to, but not including, 4.0.0
-  s.dependency 'PostHog', '~> 3.57.6'
+  # ~> Version 3.58.1 up to, but not including, 4.0.0
+  s.dependency 'PostHog', '~> 3.58.1'
   s.ios.deployment_target = '13.0'
   s.swift_versions = "5.3"
 
