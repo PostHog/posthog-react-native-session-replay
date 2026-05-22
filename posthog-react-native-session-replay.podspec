@@ -16,8 +16,19 @@ Pod::Spec.new do |s|
 
   s.source_files = "ios/**/*.{swift,h,hpp,m,mm,c,cpp}"
 
-  # ~> Version 3.58.1 up to, but not including, 4.0.0
-  s.dependency 'PostHog', '~> 3.58.1'
+  # Source posthog-ios via SPM when the React Native >= 0.75 helper is available;
+  # fall back to the CocoaPods trunk dependency for older RN.
+  # `upToNextMinorVersion: 3.58.1` matches the CocoaPods `~> 3.58.1` constraint
+  # (>= 3.58.1, < 3.59.0) so the existing per-release bump cadence is preserved.
+  if respond_to?(:spm_dependency, true)
+    spm_dependency(s,
+      url: 'https://github.com/PostHog/posthog-ios.git',
+      requirement: { kind: 'upToNextMinorVersion', minimumVersion: '3.58.1' },
+      products: ['PostHog']
+    )
+  else
+    s.dependency 'PostHog', '~> 3.58.1'
+  end
   s.ios.deployment_target = '13.0'
   s.swift_versions = "5.3"
 
