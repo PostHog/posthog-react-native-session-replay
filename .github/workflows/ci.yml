@@ -107,18 +107,18 @@ jobs:
           pnpm turbo run build:android --cache-dir="${{ env.TURBO_CACHE_DIR }}"
 
   build-ios-static-lib:
-    # Xcode 16.3+ required to parse Pods.xcodeproj entries written by the
-    # React Native spm_dependency helper. macos-15-xlarge ships Xcode 16.4
-    # as latest-stable.
+    # Xcode 26.4 is needed to parse Pods.xcodeproj entries written by the
+    # React Native spm_dependency helper (XCSwiftPackageProductDependency
+    # _setSavedArchiveVersion: selector).
     runs-on: macos-15-xlarge
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
-      - name: Select latest stable Xcode
+      - name: Select Xcode 26.4
         uses: maxim-lobanov/setup-xcode@1242409711ff5721add51979e9e11e23ebb7e5a4 # v1
         with:
-          xcode-version: latest-stable
+          xcode-version: '26.4'
 
       - name: Print Xcode version
         run: xcodebuild -version
