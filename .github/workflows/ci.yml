@@ -153,17 +153,12 @@ jobs:
   build-ios-spm:
     # Exercises the opt-in path: `posthog.useSpm` in Podfile.properties.json
     # routes posthog-ios through the React Native spm_dependency helper.
-    # The SPM path requires dynamic frameworks; Xcode 16.4 is the macos-15
-    # baseline known to handle the helper's Pods.xcodeproj output.
-    runs-on: macos-15-xlarge
+    # The SPM path requires dynamic frameworks. macos-26 uses the latest
+    # Xcode shipped with the runner image.
+    runs-on: macos-26
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-
-      - name: Select Xcode 16.4
-        uses: maxim-lobanov/setup-xcode@1242409711ff5721add51979e9e11e23ebb7e5a4 # v1
-        with:
-          xcode-version: '16.4'
 
       - name: Print Xcode version
         run: xcodebuild -version
@@ -187,7 +182,7 @@ jobs:
           NO_FLIPPER: 1
           USE_FRAMEWORKS: dynamic
 
-      - name: Build example for iOS
+      - name: Build example for iOS Simulator
         run: |
           cd example/ios
-          set -o pipefail && xcrun xcodebuild -workspace PosthogReactNativeSessionReplayExample.xcworkspace -configuration Debug -scheme posthog-react-native-session-replay -destination generic/platform=ios | xcpretty
+          xcodebuild -workspace PosthogReactNativeSessionReplayExample.xcworkspace -configuration Debug -scheme posthog-react-native-session-replay -sdk iphonesimulator -destination 'generic/platform=iOS Simulator'
