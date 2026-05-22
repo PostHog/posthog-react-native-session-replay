@@ -16,11 +16,16 @@ Pod::Spec.new do |s|
 
   s.source_files = "ios/**/*.{swift,h,hpp,m,mm,c,cpp}"
 
-  # Source posthog-ios via SPM when the React Native >= 0.75 helper is available;
-  # fall back to the CocoaPods trunk dependency for older RN.
-  # `upToNextMinorVersion: 3.58.1` matches the CocoaPods `~> 3.58.1` constraint
-  # (>= 3.58.1, < 3.59.0) so the existing per-release bump cadence is preserved.
-  if respond_to?(:spm_dependency, true)
+  # Default: resolve posthog-ios via CocoaPods trunk.
+  # Opt-in: set `posthog.useSpm` to `"true"` in the consumer's
+  # `ios/Podfile.properties.json` to resolve posthog-ios via Swift Package
+  # Manager using the React Native `spm_dependency` helper (RN >= 0.75).
+  # The SPM path requires `use_frameworks! :linkage => :dynamic` in the Podfile.
+  podfile_properties_path = File.join(Pod::Config.instance.installation_root.to_s, 'Podfile.properties.json')
+  podfile_properties = File.exist?(podfile_properties_path) ? (JSON.parse(File.read(podfile_properties_path)) rescue {}) : {}
+  posthog_use_spm = podfile_properties['posthog.useSpm'].to_s == 'true'
+
+  if posthog_use_spm && respond_to?(:spm_dependency, true)
     spm_dependency(s,
       url: 'https://github.com/PostHog/posthog-ios.git',
       requirement: { kind: 'upToNextMinorVersion', minimumVersion: '3.58.1' },

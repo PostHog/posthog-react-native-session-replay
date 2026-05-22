@@ -10,6 +10,14 @@ npm install posthog-react-native-session-replay
 
 ## iOS dependency resolution
 
-`posthog-ios` is resolved through Swift Package Manager when the React Native `spm_dependency` podspec helper is available (RN >= 0.75); older React Native versions fall back to CocoaPods trunk. The install command (`pod install`) is unchanged — the swap is internal to the podspec.
+By default, `posthog-ios` is resolved through CocoaPods trunk via `pod install`.
 
-Once [CocoaPods trunk goes read-only on 2026-12-02](https://blog.cocoapods.org/CocoaPods-Specs-Repo/), React Native < 0.75 consumers will need to upgrade React Native to keep receiving `posthog-ios` updates.
+[CocoaPods trunk goes read-only on 2026-12-02](https://blog.cocoapods.org/CocoaPods-Specs-Repo/) and `posthog-ios` is moving to Swift Package Manager (see [PostHog/posthog-ios#472](https://github.com/PostHog/posthog-ios/issues/472)). To opt this package into the SPM resolution path early, add the following to your app's `ios/Podfile.properties.json`:
+
+```json
+{
+  "posthog.useSpm": "true"
+}
+```
+
+When that property is set and React Native >= 0.75 is in use, `pod install` resolves `posthog-ios` from `https://github.com/PostHog/posthog-ios.git` via the RN `spm_dependency` helper. The SPM path requires `use_frameworks! :linkage => :dynamic` in your `Podfile` ([known limitation](https://github.com/facebook/react-native/pull/44627#issuecomment-2123119711)).
