@@ -13,6 +13,8 @@ jobs:
     name: Analyze (${{ matrix.language }})
     runs-on: ${{ matrix.runner }}
     permissions:
+      actions: read # required by the CodeQL action
+      contents: read # required for actions/checkout and CodeQL result upload
       security-events: write # for uploading CodeQL results
       packages: read
     strategy:
