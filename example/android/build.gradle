@@ -1,7 +1,7 @@
 buildscript {
     ext {
         buildToolsVersion = "36.0.0"
-        minSdkVersion = 24 // RN 0.77 enforces minSdk = 24
+        minSdkVersion = 24
         compileSdkVersion = 36
         targetSdkVersion = 36
         ndkVersion = "27.1.12297006"
@@ -19,4 +19,3 @@ buildscript {
 }
 
 apply plugin: "com.facebook.react.rootproject"
-
