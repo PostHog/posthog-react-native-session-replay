@@ -3,6 +3,11 @@ require "json"
 package = JSON.parse(File.read(File.join(__dir__, "package.json")))
 folly_compiler_flags = '-DFOLLY_NO_CONFIG -DFOLLY_MOBILE=1 -DFOLLY_USE_LIBCPP=1 -Wno-comma -Wno-shorten-64-to-32'
 
+# Single source of truth for the posthog-ios native dependency version.
+# Used by both the SPM and CocoaPods resolution paths below; bump this
+# line when picking up a new posthog-ios release.
+posthog_ios_version = '3.58.1'
+
 Pod::Spec.new do |s|
   s.name         = "posthog-react-native-session-replay"
   s.version      = package["version"]
@@ -28,11 +33,11 @@ Pod::Spec.new do |s|
   if posthog_use_spm && respond_to?(:spm_dependency, true)
     spm_dependency(s,
       url: 'https://github.com/PostHog/posthog-ios.git',
-      requirement: { kind: 'upToNextMinorVersion', minimumVersion: '3.58.1' },
+      requirement: { kind: 'upToNextMinorVersion', minimumVersion: posthog_ios_version },
       products: ['PostHog']
     )
   else
-    s.dependency 'PostHog', '~> 3.58.1'
+    s.dependency 'PostHog', "~> #{posthog_ios_version}"
   end
   s.ios.deployment_target = '13.0'
   s.swift_versions = "5.3"
