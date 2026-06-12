@@ -1,5 +1,10 @@
 # posthog-react-native-session-replay
 
+> [!IMPORTANT]
+> This plugin has moved to the PostHog JavaScript monorepo and has been renamed from `posthog-react-native-session-replay` to `@posthog/react-native-plugin`.
+>
+> New repository: https://github.com/PostHog/posthog-js/tree/main/packages/react-native-plugin
+
 Session Replay for React Native (Android and iOS)
 
 ## Installation
